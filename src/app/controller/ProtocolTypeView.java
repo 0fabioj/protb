@@ -20,8 +20,6 @@ public class ProtocolTypeView implements Initializable {
     @FXML
     private TableColumn<ProtocolType, String> colDesc;
     @FXML
-    private TableColumn<ProtocolType, Integer> colId;
-    @FXML
     private TextField textfieldId;
     @FXML
     private TextField textfieldDesc;
@@ -67,7 +65,6 @@ public class ProtocolTypeView implements Initializable {
         buttonDel.setDisable(true);
         try {
             ObservableList<ProtocolType> data = ProtocolTypeController.getList();
-            colId.setCellValueFactory(new PropertyValueFactory<ProtocolType, Integer>("id"));
             colDesc.setCellValueFactory(new PropertyValueFactory<ProtocolType, String>("description"));
 
             tableviewType.setItems(data);
@@ -116,5 +113,12 @@ public class ProtocolTypeView implements Initializable {
             alert2.showAndWait();
         }
         fillTableViewType();
+    }
+
+    @FXML
+    public void actionClear(ActionEvent event) {
+        textfieldId.clear();
+        textfieldDesc.clear();
+        buttonDel.setDisable(true);
     }
 }

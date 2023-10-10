@@ -9,6 +9,14 @@ GridPane {
     -fx-vgap: 5;
 }
 
+TitledPane {
+    -fx-padding: 8 8 0 8;
+}
+
 .button {
     -fx-pref-height: 32px;
+}
+
+#title {
+    -fx-font-size: 14pt;
 }

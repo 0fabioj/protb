@@ -19,8 +19,6 @@ public class PersonView implements Initializable {
     @FXML
     private TableColumn<Person, String> colName;
     @FXML
-    private TableColumn<Person, Integer> colId;
-    @FXML
     private TextField textfieldId;
     @FXML
     private TextField textfieldName;
@@ -66,7 +64,6 @@ public class PersonView implements Initializable {
         buttonDel.setDisable(true);
         try {
             ObservableList<Person> data = PersonController.getList();
-            colId.setCellValueFactory(new PropertyValueFactory<Person, Integer>("id"));
             colName.setCellValueFactory(new PropertyValueFactory<Person, String>("name"));
 
             tableviewPerson.setItems(data);
@@ -115,5 +112,12 @@ public class PersonView implements Initializable {
             alert2.showAndWait();
         }
         fillTableViewPerson();
+    }
+
+    @FXML
+    public void actionClear(ActionEvent event) {
+        textfieldId.clear();
+        textfieldName.clear();
+        buttonDel.setDisable(true);
     }
 }

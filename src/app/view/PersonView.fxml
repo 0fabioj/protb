@@ -5,15 +5,14 @@
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.TitledPane?>
 <?import javafx.scene.control.ToolBar?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.ColumnConstraints?>
-<?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.controller.PersonView">
+<VBox prefHeight="400.0" prefWidth="600.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.controller.PersonView">
    <children>
       <ToolBar prefHeight="40.0" prefWidth="200.0">
         <items>
@@ -35,29 +34,37 @@
                   </ImageView>
                </graphic>
             </Button>
+            <Button mnemonicParsing="false" onAction="#actionClear">
+               <graphic>
+                  <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../img/erase.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
         </items>
       </ToolBar>
-       <GridPane hgap="4.0">
-           <children>
-               <Label text="Id" />
-               <Label text="Nome" GridPane.columnIndex="1" />
-               <TextField fx:id="textfieldId" editable="false" GridPane.rowIndex="1" />
-               <TextField fx:id="textfieldName" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-           </children>
-         <columnConstraints>
-            <ColumnConstraints />
-            <ColumnConstraints />
-         </columnConstraints>
-         <rowConstraints>
-            <RowConstraints />
-            <RowConstraints />
-         </rowConstraints>
-       </GridPane>
-       <TableView fx:id="tableviewPerson" onMouseClicked="#actionEdit" prefHeight="319.0" prefWidth="600.0">
-           <columns>
-               <TableColumn fx:id="colId" prefWidth="75.0" text="Id" />
-               <TableColumn fx:id="colName" prefWidth="524.0" text="Nome" />
-           </columns>
-       </TableView>
+      <TitledPane prefHeight="43.0" prefWidth="600.0" text="Dados">
+         <content>
+            <HBox prefHeight="100.0" prefWidth="200.0" styleClass="HBox">
+               <children>
+                     <Label text="Id" />
+                     <TextField fx:id="textfieldId" editable="false" prefHeight="24.0" prefWidth="94.0" />
+                     <Label text="Nome" />
+                     <TextField fx:id="textfieldName" prefHeight="24.0" prefWidth="390.0" />
+               </children>
+            </HBox>
+         </content>
+      </TitledPane>
+      <TitledPane prefHeight="274.0" prefWidth="600.0" text="Lista">
+         <content>
+             <TableView fx:id="tableviewPerson" onMouseClicked="#actionEdit" prefHeight="319.0" prefWidth="600.0">
+                 <columns>
+                     <TableColumn fx:id="colName" prefWidth="581.0" text="Nome" />
+                 </columns>
+             </TableView>
+         </content>
+      </TitledPane>
    </children>
 </VBox>

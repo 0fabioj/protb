@@ -12,11 +12,13 @@
 <?import javafx.scene.control.ToolBar?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox prefHeight="512.0" prefWidth="768.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.controller.MainWindow">
+<VBox prefHeight="512.0" prefWidth="1024.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.controller.MainWindow">
    <children>
       <ToolBar>
         <items>
@@ -49,41 +51,59 @@
             <Button mnemonicParsing="false" onAction="#refreshTableViewProtocol" text="Atualizar" />
         </items>
       </ToolBar>
-      <TitledPane prefHeight="200.0" prefWidth="200.0" text="Filtros">
+      <TitledPane prefHeight="118.0" prefWidth="1024.0" text="Filtros">
          <content>
             <GridPane>
                <children>
                   <Label text="Número" />
-                  <Label text="Requerente" GridPane.columnIndex="1" />
+                  <Label text="Requerente" GridPane.rowIndex="1" />
                   <Label text="Tipo" GridPane.rowIndex="2" />
                   <Label text="Intervalo" GridPane.columnIndex="2" />
-                  <TextField fx:id="filterNumber" GridPane.rowIndex="1" />
+                  <TextField fx:id="filterNumber" GridPane.columnIndex="1" />
                   <TextField fx:id="filterPerson" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                  <ComboBox fx:id="filterType" onMouseClicked="#fillComboType" GridPane.columnSpan="2" GridPane.rowIndex="3" />
-                  <HBox GridPane.columnIndex="2" GridPane.rowIndex="1">
+                  <ComboBox fx:id="filterType" onMouseClicked="#fillComboType" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="2" />
+                  <HBox spacing="4.0" GridPane.columnIndex="3">
                      <children>
                         <DatePicker fx:id="filterDate1" />
                         <DatePicker fx:id="filterDate2" />
                      </children>
                   </HBox>
-                  <Label text="Situação" GridPane.columnIndex="2" GridPane.rowIndex="2" />
-                  <ComboBox fx:id="filterStatus" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+                  <Label text="Situação" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                  <ComboBox fx:id="filterStatus" GridPane.columnIndex="3" GridPane.rowIndex="1" />
                </children>
+               <columnConstraints>
+                  <ColumnConstraints />
+                  <ColumnConstraints />
+                  <ColumnConstraints />
+                  <ColumnConstraints minWidth="10.0" />
+               </columnConstraints>
+               <rowConstraints>
+                  <RowConstraints />
+                  <RowConstraints />
+                  <RowConstraints />
+                  <RowConstraints />
+               </rowConstraints>
             </GridPane>
          </content>
+         <VBox.margin>
+            <Insets />
+         </VBox.margin>
       </TitledPane>
-      <TitledPane text="Protocolos">
+      <TitledPane prefHeight="332.0" prefWidth="1024.0" text="Protocolos">
          <content>
             <TableView fx:id="tableView1" onMouseClicked="#actionProtocolEdit" prefHeight="365.0" prefWidth="752.0">
               <columns>
                 <TableColumn fx:id="colId" prefWidth="64.0" text="Numero" />
-                <TableColumn fx:id="colPerson" prefWidth="128.0" text="Requerente" />
-                  <TableColumn fx:id="colType" prefWidth="128.0" text="Tipo" />
-                  <TableColumn fx:id="colRecorded" prefWidth="96.0" text="Data" />
-                  <TableColumn fx:id="colStatus" prefWidth="64.0" text="Status" />
+                <TableColumn fx:id="colPerson" prefWidth="266.0" text="Requerente" />
+                  <TableColumn fx:id="colType" prefWidth="207.0" text="Tipo" />
+                  <TableColumn fx:id="colRecorded" prefWidth="132.0" text="Data" />
+                  <TableColumn fx:id="colStatus" prefWidth="135.0" text="Status" />
               </columns>
             </TableView>
          </content>
+         <VBox.margin>
+            <Insets />
+         </VBox.margin>
       </TitledPane>
    </children>
 </VBox>

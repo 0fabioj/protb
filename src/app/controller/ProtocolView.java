@@ -8,7 +8,6 @@ import core.model.Protocol;
 import core.model.ProtocolType;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.*;
@@ -18,7 +17,6 @@ import javafx.util.StringConverter;
 
 import java.net.URL;
 import java.time.LocalDate;
-import java.util.List;
 import java.util.ResourceBundle;
 
 public class ProtocolView implements Initializable {
@@ -61,7 +59,7 @@ public class ProtocolView implements Initializable {
     public void actionSave(ActionEvent event) {
         String protocolId = textfieldId.getText();
         int personId = comboPerson.getSelectionModel().getSelectedItem().getId();
-        int typeId = comboPerson.getSelectionModel().getSelectedItem().getId();
+        int typeId = comboType.getSelectionModel().getSelectedItem().getId();
         String summary = textSummary.getText();
         int status = 1;
         LocalDate recorded = dateRecorded.getValue();
@@ -164,10 +162,9 @@ public class ProtocolView implements Initializable {
 
     public void fillComboType() {
         try {
-            List<ProtocolType> listType = ProtocolTypeController.getList();
-            for (var i = 0; i < listType.size(); i++) {
-                comboType.getItems().add(i, listType.get(i));
-            }
+            comboType.getItems().clear();
+            comboType.getItems().setAll(ProtocolTypeController.getList());
+            comboType.getSelectionModel().selectFirst();
             comboType.setConverter(new StringConverter<ProtocolType>() {
                 @Override
                 public String toString(ProtocolType pt) {
@@ -186,10 +183,9 @@ public class ProtocolView implements Initializable {
 
     public void fillComboPerson() {
         try {
-            List<Person> listPerson = PersonController.getList();
-            for (var i = 0; i < listPerson.size(); i++) {
-                comboPerson.getItems().add(i, listPerson.get(i));
-            }
+            comboPerson.getItems().clear();
+            comboPerson.getItems().setAll(PersonController.getList());
+            comboPerson.getSelectionModel().selectFirst();
             comboPerson.setConverter(new StringConverter<Person>() {
                 @Override
                 public String toString(Person p) {
@@ -204,6 +200,12 @@ public class ProtocolView implements Initializable {
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
+    }
+
+    @FXML public void actionChangeComboPerson(ActionEvent event){
+        System.out.print("Combo Person Selected:");
+        System.out.print(comboPerson.getSelectionModel().getSelectedItem().getId());
+        System.out.println(comboPerson.getSelectionModel().getSelectedItem().getName());
     }
 
 }

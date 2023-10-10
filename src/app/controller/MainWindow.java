@@ -46,7 +46,6 @@ public class MainWindow implements Initializable {
     private TableColumn<Protocol, LocalDateTime> colRecorded;
     @FXML
     private TableColumn<Protocol, String> colStatus;
-
     @FXML
     private TextField filterNumber;
     @FXML
@@ -61,15 +60,13 @@ public class MainWindow implements Initializable {
     private DatePicker filterDate2;
 
     @FXML public void refreshTableViewProtocol(ActionEvent event) {
-        if (tableView1.getItems().size() > 0) {
+        if (!tableView1.getItems().isEmpty()) {
             tableView1.getItems().clear();
         }
-        listProtocol = ProtocolController.getList();
+        //listProtocol = ProtocolController.getList();
     }
     public void fillProtocolTableView() {
         try {
-            System.out.println("fillProtocolTableView");
-            System.out.println("1");
             listProtocol = ProtocolController.getList();
             colId.setCellValueFactory(new PropertyValueFactory<Protocol, Integer>("id"));
             colPerson.setCellValueFactory(param -> new SimpleObjectProperty<>(param.getValue().getPerson().getName()));
@@ -105,13 +102,9 @@ public class MainWindow implements Initializable {
                 });
             });
 
-            System.out.println("2");
-
             SortedList<Protocol> sortedData = new SortedList<>(filteredData);
             sortedData.comparatorProperty().bind(tableView1.comparatorProperty());
-            System.out.println("3");
             tableView1.setItems(sortedData);
-            System.out.println("4");
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
@@ -120,11 +113,11 @@ public class MainWindow implements Initializable {
     public void fillComboType() {
         try {
             filterType.getItems().clear();
-            List<ProtocolType> listType = ProtocolTypeController.getList();
-            for (var i = 0; i < listType.size(); i++) {
-                filterType.getItems().add(i, listType.get(i));
+            filterType.getItems().add(0, new ProtocolType(0, "Todos"));
+            for( ProtocolType protocolType : ProtocolTypeController.getList()) {
+                filterType.getItems().add(protocolType);
             }
-            filterType.setVisibleRowCount(listType.size());
+            filterType.getSelectionModel().selectFirst();
             filterType.setConverter(new StringConverter<ProtocolType>() {
                 @Override
                 public String toString(ProtocolType pt) {
@@ -153,7 +146,7 @@ public class MainWindow implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        //fillComboType();
+        fillComboType();
         fillComboStatus();
         fillProtocolTableView();
     }

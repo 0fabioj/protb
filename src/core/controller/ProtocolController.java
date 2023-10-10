@@ -20,7 +20,9 @@ public class ProtocolController {
         String query;
         List<Object> params = new ArrayList<>();
         params.add(p.getPerson().getId());
+        System.out.println("save():person:" + p.getPerson().getId());
         params.add(p.getProtocolType().getId());
+        System.out.println("save():type:" + p.getProtocolType().getId());
         params.add(p.getSummary());
         params.add(p.getPath());
         params.add(p.getStatus());

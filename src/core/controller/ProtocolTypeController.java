@@ -1,5 +1,6 @@
 package core.controller;
 
+import core.model.Person;
 import core.model.ProtocolType;
 import database.PostgreSQLConnection;
 import javafx.collections.FXCollections;
@@ -65,6 +66,11 @@ public class ProtocolTypeController {
             }
         }catch(SQLException e){
             System.out.println(e.getMessage());
+        }
+
+        System.out.println("ProtocolType getList()");
+        for (ProtocolType protocolType : list1) {
+            System.out.println("id:" + protocolType.getId() + " nome:" + protocolType.getDescription());
         }
 
         return list1;

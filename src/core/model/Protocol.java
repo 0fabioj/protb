@@ -121,59 +121,6 @@ public class Protocol {
         this.id = id;
     }
 
-    public boolean Save() {
-        try {
-            return true;
-        } catch (Exception e) {
-            return false;
-        } finally {
-
-        }
-    }
-
-    public boolean Delete() {
-        try {
-            return true;
-        } catch (Exception e) {
-            return false;
-        } finally {
-
-        }
-    }
-
-    public Protocol Load(int id) {
-        try {
-            Protocol p1 = new Protocol(id);
-            return p1;
-        } catch (Exception e) {
-            return null;
-        } finally {
-
-        }
-    }
-
-    static public int Check(int id) {
-        try {
-            return 1;
-        } catch (Exception e) {
-            return 0;
-        } finally {
-
-        }
-    }
-
-    public List<String[]> List(int filter1, String filter2, List<LocalDateTime> filter3, int filter4) {
-        List<String[]> list1 = null;
-
-        try {
-            return list1;
-        } catch (Exception e) {
-            return null;
-        } finally {
-            list1 = null;
-        }
-    }
-
     public Person getPerson() {
         return person;
     }

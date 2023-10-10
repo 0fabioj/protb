@@ -8,7 +8,7 @@ import java.util.List;
 
 public class PostgreSQLConnection {
     public static Connection conn;
-    final private static String url = "jdbc:postgresql://192.168.1.155:5432/protb";
+    final private static String url = "jdbc:postgresql://192.168.1.154:5432/protb";
     final private static String user = "pgsql";
     final private static String password = "1234";
 
@@ -16,7 +16,7 @@ public class PostgreSQLConnection {
         conn = null;
         try {
             conn = DriverManager.getConnection(url, user, password);
-            System.out.println("Opened database successfully");
+            //System.out.println("Opened database successfully");
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }

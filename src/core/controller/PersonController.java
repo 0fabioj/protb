@@ -69,6 +69,10 @@ public class PersonController {
         }catch(SQLException e){
             System.out.println(e.getMessage());
         }
+        System.out.println("Person getList()");
+        for (Person person : list1) {
+            System.out.println("id:" + person.getId() + " nome:" + person.getName());
+        }
 
         return list1;
     }

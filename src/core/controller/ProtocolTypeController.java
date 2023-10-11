@@ -68,10 +68,10 @@ public class ProtocolTypeController {
             System.out.println(e.getMessage());
         }
 
-        System.out.println("ProtocolType getList()");
+        /*System.out.println("ProtocolType getList()");
         for (ProtocolType protocolType : list1) {
             System.out.println("id:" + protocolType.getId() + " nome:" + protocolType.getDescription());
-        }
+        }*/
 
         return list1;
     }

@@ -5,7 +5,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 public class Protocol {
-    private int id, newId, status;
+    private int id, status;
     private LocalDate recorded, requested, receipted, forwarded, checked;
     private LocalDateTime created, altered;
     private String summary, path;
@@ -20,16 +20,18 @@ public class Protocol {
         this.id = id;
     }
 
-    public int getNewId() {
-        return newId;
-    }
+    public String getStatus() {
+        String res;
+        if(status == 1) { res = "Recebido"; }
+        else if (status == 2) { res = "Remetido"; }
+        else if (status == 3) { res = "Deferido"; }
+        else if (status == 4) { res = "Indeferido"; }
+        else { res = "Cancelado"; }
 
-    public void setNewId(int newId) {
-        this.newId = newId;
+        return res;
     }
-
-    public int getStatus() {
-        return status;
+    public int getStatusInt() {
+         return status;
     }
 
     public void setStatus(int status) {

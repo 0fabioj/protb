@@ -23,7 +23,6 @@ import javafx.util.StringConverter;
 import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDateTime;
-import java.util.List;
 import java.util.ResourceBundle;
 
 public class MainWindow implements Initializable {
@@ -60,19 +59,17 @@ public class MainWindow implements Initializable {
     private DatePicker filterDate2;
 
     @FXML public void refreshTableViewProtocol(ActionEvent event) {
-        if (!tableView1.getItems().isEmpty()) {
-            tableView1.getItems().clear();
-        }
-        //listProtocol = ProtocolController.getList();
+        System.out.println("Refresh()");
+        updateTableView();
     }
-    public void fillProtocolTableView() {
+    public void updateTableView() {
         try {
             listProtocol = ProtocolController.getList();
             colId.setCellValueFactory(new PropertyValueFactory<Protocol, Integer>("id"));
             colPerson.setCellValueFactory(param -> new SimpleObjectProperty<>(param.getValue().getPerson().getName()));
             colType.setCellValueFactory(param -> new SimpleObjectProperty<>(param.getValue().getProtocolType().getDescription()));
             colRecorded.setCellValueFactory(new PropertyValueFactory<Protocol, LocalDateTime>("recorded"));
-            /*colStatus.setCellValueFactory(new PropertyValueFactory<Protocol, Integer>("status"));*/
+            colStatus.setCellValueFactory(new PropertyValueFactory<Protocol, String>("status"));
 
             FilteredList<Protocol> filteredData = new FilteredList<>(listProtocol, b -> true);
             filterPerson.textProperty().addListener((observable, oldValue, newValue) -> {
@@ -137,7 +134,7 @@ public class MainWindow implements Initializable {
 
     public void fillComboStatus() {
         try {
-            filterStatus.getItems().setAll("Todos","Recebido","Remetido","Deferido","Indeferido");
+            filterStatus.getItems().setAll("Todos","Recebido","Remetido","Deferido","Indeferido","Cancelado");
             filterStatus.setValue("Todos");
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -148,7 +145,7 @@ public class MainWindow implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         fillComboType();
         fillComboStatus();
-        fillProtocolTableView();
+        updateTableView();
     }
 
     @FXML public void newProtocolWindow() throws IOException {
@@ -172,7 +169,8 @@ public class MainWindow implements Initializable {
                     root = loader.load();
 
                     ProtocolView pv = loader.getController();
-                    pv.protocolLoad(p);
+                    //pv.protocolLoad(p);
+                    pv.setProtocol(p);
 
                     //stage = (Stage)((Node)event.getSource()).getScene().getWindow();
                     stage = new Stage();

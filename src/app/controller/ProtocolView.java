@@ -32,22 +32,29 @@ public class ProtocolView implements Initializable {
     @FXML private DatePicker dateChecked;
     @FXML private Button buttonDel;
 
+    public void setProtocol(Protocol p) {
+        protocolLoad(p);
+        System.out.println("setProtocol():" + p.getId());
+    }
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        System.out.println("initialize()");
         fillComboStatus();
         fillComboType();
         fillComboPerson();
         buttonDel.setDisable(true);
     }
 
-    void protocolLoad(Protocol p) {
+    public void protocolLoad(Protocol p) {
         textfieldId.setText(String.valueOf(p.getId()));
         dateRecorded.setValue(p.getRecorded());
-        comboPerson.setValue(p.getPerson());
-        comboType.setValue(p.getProtocolType());
+        comboPerson.getSelectionModel().select(p.getPerson());
+        comboType.getSelectionModel().select(p.getProtocolType());
         textSummary.setText(p.getSummary());
         dateRequested.setValue(p.getRequested());
-        comboStatus.setValue(String.valueOf(p.getStatus()));
+        //comboStatus.setValue(String.valueOf(p.getStatus()));
+        comboStatus.setValue(p.getStatus());
         dateReceived.setValue(p.getReceipted());
         dateForwarded.setValue(p.getForwarded());
         dateChecked.setValue(p.getChecked());
@@ -61,7 +68,7 @@ public class ProtocolView implements Initializable {
         int personId = comboPerson.getSelectionModel().getSelectedItem().getId();
         int typeId = comboType.getSelectionModel().getSelectedItem().getId();
         String summary = textSummary.getText();
-        int status = 1;
+        int status = comboStatus.getSelectionModel().getSelectedIndex() + 1;
         LocalDate recorded = dateRecorded.getValue();
         LocalDate requested = dateRequested.getValue();
         LocalDate receipted = dateReceived.getValue();
@@ -147,14 +154,14 @@ public class ProtocolView implements Initializable {
 /*
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/app/view/MainWindow.fxml"));
         MainWindow controller = (MainWindow) loader.getController();
-        controller.fillProtocolTableView();
+        controller.updateTableView();
  */
     }
 
     public void fillComboStatus() {
         try {
-            comboStatus.getItems().setAll("Recebido","Remetido","Deferido","Indeferido");
-            comboStatus.setValue("Recebido");
+            comboStatus.getItems().setAll("Recebido","Remetido","Deferido","Indeferido","Cancelado");
+            comboStatus.getSelectionModel().selectFirst();
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }

@@ -20,12 +20,10 @@ public class ProtocolController {
         String query;
         List<Object> params = new ArrayList<>();
         params.add(p.getPerson().getId());
-        System.out.println("save():person:" + p.getPerson().getId());
         params.add(p.getProtocolType().getId());
-        System.out.println("save():type:" + p.getProtocolType().getId());
         params.add(p.getSummary());
         params.add(p.getPath());
-        params.add(p.getStatus());
+        params.add(p.getStatusInt());
         params.add(p.getRecorded());
         params.add(p.getRequested());
         params.add(p.getReceipted());
@@ -73,7 +71,10 @@ public class ProtocolController {
     {
         ObservableList<Protocol> protocolList = FXCollections.observableArrayList();
         Connection conn = PostgreSQLConnection.connect();
-        String query = "SELECT p.id, pe.name, pt.description, p.recorded, p.status FROM protocol p "
+        String query = "SELECT p.id, pe.id, pe.name, pt.id, pt.description, "
+                +"p.summary, p.recorded, p.status, p.path, "
+                +"p.recorded, p.requested, p.receipted, p.forwarded, p.checked, p.created, p.altered "
+                +"FROM protocol p "
                 +"INNER JOIN person pe ON (pe.id=p.person_id) "
                 +"INNER JOIN protocol_type pt ON (pt.id=p.type_id)";
         Statement st;
@@ -86,10 +87,19 @@ public class ProtocolController {
             while(rs.next()) {
                 protocol = new Protocol();
                 protocol.setId(rs.getInt(1));
-                protocol.setPerson(new Person(0,rs.getString(2)));
-                protocol.setProtocolType(new ProtocolType(0,rs.getString(3)));
-                protocol.setRecorded(rs.getDate(4).toLocalDate());
-                protocol.setStatus(rs.getInt(5));
+                protocol.setPerson(new Person(rs.getInt(2),rs.getString(3)));
+                protocol.setProtocolType(new ProtocolType(rs.getInt(4),rs.getString(5)));
+                protocol.setSummary(rs.getString(6));
+                protocol.setRecorded(rs.getDate(7).toLocalDate());
+                protocol.setStatus(rs.getInt(8));
+                protocol.setPath(rs.getString(9));
+                //protocol.setRecorded(rs.getDate(10).toLocalDate()); }
+                //protocol.setRequested(rs.getDate(11).toLocalDate());
+                //protocol.setReceipted(rs.getDate(12).toLocalDate());
+                if(rs.getObject(13) != null) { protocol.setForwarded(rs.getDate(13).toLocalDate()); }
+                if(rs.getObject(14) != null) { protocol.setChecked(rs.getDate(14).toLocalDate()); }
+                protocol.setCreated(rs.getTimestamp(15).toLocalDateTime());
+                if(rs.getObject(16) != null) { protocol.setAltered(rs.getTimestamp(16).toLocalDateTime()); }
                 protocolList.add(protocol);
             }
         }catch(SQLException e){

@@ -42,6 +42,8 @@ public class ProtocolController {
             return PostgreSQLConnection.ExecQuery1(conn, query, params);
         } catch (SQLException e) {
             throw new RuntimeException(e);
+        } finally {
+            PostgreSQLConnection.closeDatabase(conn);
         }
     }
 
@@ -53,6 +55,8 @@ public class ProtocolController {
             return PostgreSQLConnection.ExecQuery1(conn, query, null);
         } catch (SQLException e) {
             throw new RuntimeException(e);
+        } finally {
+            PostgreSQLConnection.closeDatabase(conn);
         }
     }
 
@@ -64,6 +68,8 @@ public class ProtocolController {
             return PostgreSQLConnection.SelectCount(conn, query);
         } catch (SQLException e) {
             throw new RuntimeException(e);
+        } finally {
+            PostgreSQLConnection.closeDatabase(conn);
         }
     }
 
@@ -102,8 +108,10 @@ public class ProtocolController {
                 if(rs.getObject(16) != null) { protocol.setAltered(rs.getTimestamp(16).toLocalDateTime()); }
                 protocolList.add(protocol);
             }
-        }catch(SQLException e){
+        } catch(SQLException e){
             System.out.println(e.getMessage());
+        } finally {
+            PostgreSQLConnection.closeDatabase(conn);
         }
 
         return protocolList;

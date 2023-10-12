@@ -76,19 +76,17 @@ public class ProtocolView implements Initializable {
         LocalDate checked = dateChecked.getValue();
 
         if (personId <= 0) {
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("[protB] Aviso");
-            alert.setHeaderText("Campo deve ser selecionado.");
-            alert.setContentText("Requerente");
-
-            alert.showAndWait();
+            CustomAlert.showAlert(Alert.AlertType.INFORMATION,
+                    null,"Campo deve ser selecionado: \nRequerente");
         } else if (typeId <= 0) {
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("[protB] Aviso");
-            alert.setHeaderText("Campo deve ser selecionado.");
-            alert.setContentText("Tipo");
-
-            alert.showAndWait();
+            CustomAlert.showAlert(Alert.AlertType.INFORMATION,
+                    null,"Campo deve ser selecionado: \nTipo");
+        } else if (recorded == null) {
+            CustomAlert.showAlert(Alert.AlertType.INFORMATION,
+                    null,"Data do Protocolo deve ser preenchida.");
+        } else if (receipted== null) {
+                CustomAlert.showAlert(Alert.AlertType.INFORMATION,
+                        null,"Data do Requerimento deve ser preenchida.");
         } else {
             Protocol p = new Protocol();
             if (protocolId == null || protocolId.isEmpty()) {
@@ -109,23 +107,21 @@ public class ProtocolView implements Initializable {
             if (ProtocolController.save(p)) {
                 closeProtocolWindow(event);
             } else {
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("[protB] Erro");
-                alert.setHeaderText("Erro.");
-                alert.setContentText("err");
-
-                alert.showAndWait();
+                CustomAlert.showAlert(Alert.AlertType.ERROR,
+                        null,"Erro ao salvar.");
             }
         }
     }
 
     @FXML public void actionDel(ActionEvent event) {
         int index = Integer.parseInt(textfieldId.getText());
+
         Alert alert1 = new Alert(Alert.AlertType.CONFIRMATION);
         alert1.setTitle("[protB] Exclusão");
-        alert1.setHeaderText("Deseja excluir protocolo:");
+        alert1.setHeaderText(null);
         alert1.setContentText(textfieldId.getText());
         alert1.showAndWait();
+
         String msgAlert2;
         if (alert1.getResult() == ButtonType.OK) {
             if (ProtocolController.delete(index)) {
@@ -135,10 +131,8 @@ public class ProtocolView implements Initializable {
             else {
                 msgAlert2 = "Erro ao excluir registro";
             }
-            Alert alert2 = new Alert(Alert.AlertType.INFORMATION);
-            alert2.setTitle("[protB] Exclusão");
-            alert2.setHeaderText(msgAlert2);
-            alert2.showAndWait();
+            CustomAlert.showAlert(Alert.AlertType.INFORMATION,
+                    null,msgAlert2);
         }
     }
 

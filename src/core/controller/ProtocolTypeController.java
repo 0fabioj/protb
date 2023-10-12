@@ -26,6 +26,8 @@ public class ProtocolTypeController {
             return PostgreSQLConnection.ExecQuery1(conn, query, params);
         } catch (SQLException e) {
             throw new RuntimeException(e);
+        } finally {
+            PostgreSQLConnection.closeDatabase(conn);
         }
     }
 
@@ -37,6 +39,8 @@ public class ProtocolTypeController {
             return PostgreSQLConnection.ExecQuery1(conn, query, null);
         } catch (SQLException e) {
             throw new RuntimeException(e);
+        } finally {
+            PostgreSQLConnection.closeDatabase(conn);
         }
     }
 
@@ -48,6 +52,8 @@ public class ProtocolTypeController {
             return PostgreSQLConnection.SelectCount(conn, query);
         } catch (SQLException e) {
             throw new RuntimeException(e);
+        } finally {
+            PostgreSQLConnection.closeDatabase(conn);
         }
     }
 
@@ -64,8 +70,10 @@ public class ProtocolTypeController {
             while(rs.next()){
                 list1.add(new ProtocolType(rs.getInt("id"), rs.getString("description")));
             }
-        }catch(SQLException e){
+        } catch(SQLException e){
             System.out.println(e.getMessage());
+        } finally {
+            PostgreSQLConnection.closeDatabase(conn);
         }
 
         /*System.out.println("ProtocolType getList()");

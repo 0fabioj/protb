@@ -8,7 +8,7 @@ import java.util.List;
 
 public class PostgreSQLConnection {
     public static Connection conn;
-    final private static String url = "jdbc:postgresql://192.168.1.154:5432/protb";
+    final private static String url = "jdbc:postgresql://192.168.1.156:5432/protb";
     final private static String user = "pgsql";
     final private static String password = "1234";
 
@@ -30,6 +30,17 @@ public class PostgreSQLConnection {
         return conn;
     }
 
+    public static void closeDatabase(Connection conn) {
+        try { conn.close(); } catch (Exception e) { /* Ignored */ }
+        //System.out.println("Closed database");
+    }
+    public static void closeDatabase(PreparedStatement ps) {
+        try { ps.close(); } catch (Exception e) { /* Ignored */ }
+    }
+    public static void closeDatabase(ResultSet rs) {
+        try { rs.close(); } catch (Exception e) { /* Ignored */ }
+    }
+
     public static boolean ExecQuery1(Connection conn, String query, List params) throws SQLException {
         System.out.println("ExecQuery1");
         System.out.println(query);
@@ -45,8 +56,6 @@ public class PostgreSQLConnection {
             return result > 0 ? true : false;
         } catch (SQLException s) {
             System.out.println(s.getMessage());
-            return false;
-        } catch (Exception e) {
             return false;
         }
     }

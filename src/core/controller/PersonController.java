@@ -28,6 +28,8 @@ public class PersonController {
             return PostgreSQLConnection.ExecQuery1(conn, query, params);
         } catch (SQLException e) {
             throw new RuntimeException(e);
+        } finally {
+            PostgreSQLConnection.closeDatabase(conn);
         }
     }
 
@@ -39,6 +41,8 @@ public class PersonController {
             return PostgreSQLConnection.ExecQuery1(conn, query, null);
         } catch (SQLException e) {
             throw new RuntimeException(e);
+        } finally {
+            PostgreSQLConnection.closeDatabase(conn);
         }
     }
 
@@ -50,6 +54,8 @@ public class PersonController {
             return PostgreSQLConnection.SelectCount(conn, query);
         } catch (SQLException e) {
             throw new RuntimeException(e);
+        } finally {
+            PostgreSQLConnection.closeDatabase(conn);
         }
     }
 
@@ -66,8 +72,10 @@ public class PersonController {
             while(rs.next()){
                 list1.add(new Person(rs.getInt("id"), rs.getString("name")));
             }
-        }catch(SQLException e){
+        } catch(SQLException e){
             System.out.println(e.getMessage());
+        } finally {
+            PostgreSQLConnection.closeDatabase(conn);
         }
         /*System.out.println("Person getList()");
         for (Person person : list1) {

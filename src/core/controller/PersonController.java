@@ -1,5 +1,6 @@
 package core.controller;
 
+import app.controller.Protb;
 import core.model.Person;
 import database.PostgreSQLConnection;
 import javafx.collections.FXCollections;
@@ -12,8 +13,8 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PersonController {
-    static public boolean save(Person p) {
+public class PersonController implements Protb.IDatabase {
+    public static boolean save(Person p) {
         Connection conn = PostgreSQLConnection.connect();
         String query;
         List params = new ArrayList<>();
@@ -33,7 +34,7 @@ public class PersonController {
         }
     }
 
-    static public boolean delete(int id)
+    public static boolean delete(int id)
     {
         Connection conn = PostgreSQLConnection.connect();
         String query = "DELETE FROM person WHERE id = " + id;
@@ -46,7 +47,7 @@ public class PersonController {
         }
     }
 
-    static private int check(int id)
+    public static int check(int id)
     {
         Connection conn = PostgreSQLConnection.connect();
         String query = "SELECT count(*) FROM person WHERE id = " + id;
@@ -59,7 +60,7 @@ public class PersonController {
         }
     }
 
-    static public ObservableList<Person> getList()
+    public static ObservableList<Person> getList()
     {
         ObservableList<Person> list1 = FXCollections.observableArrayList();
         Connection conn = PostgreSQLConnection.connect();

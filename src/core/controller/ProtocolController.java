@@ -1,5 +1,6 @@
 package core.controller;
 
+import app.controller.Protb;
 import core.model.Person;
 import core.model.Protocol;
 import core.model.ProtocolType;
@@ -14,8 +15,8 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ProtocolController {
-    static public boolean save(Protocol p) {
+public class ProtocolController implements Protb.IDatabase {
+    public static boolean save(Protocol p) {
         Connection conn = PostgreSQLConnection.connect();
         String query;
         List<Object> params = new ArrayList<>();
@@ -29,6 +30,7 @@ public class ProtocolController {
         params.add(p.getReceipted());
         params.add(p.getForwarded());
         params.add(p.getChecked());
+
         try {
             if (check(p.getId()) > 0) {
                 query = "UPDATE protocol SET person_id=?, type_id=?, summary=?, path=?, status=?, "+
@@ -47,7 +49,7 @@ public class ProtocolController {
         }
     }
 
-    static public boolean delete(int id)
+    public static boolean delete(int id)
     {
         Connection conn = PostgreSQLConnection.connect();
         String query = "DELETE FROM protocol WHERE id = " + id;
@@ -60,7 +62,7 @@ public class ProtocolController {
         }
     }
 
-    static private int check(int id)
+    public static int check(int id)
     {
         Connection conn = PostgreSQLConnection.connect();
         String query = "SELECT count(*) FROM protocol WHERE id = " + id;
@@ -73,7 +75,7 @@ public class ProtocolController {
         }
     }
 
-    static public ObservableList<Protocol> getList()
+    public static ObservableList<Protocol> getList()
     {
         ObservableList<Protocol> protocolList = FXCollections.observableArrayList();
         Connection conn = PostgreSQLConnection.connect();
@@ -85,7 +87,7 @@ public class ProtocolController {
                 +"INNER JOIN protocol_type pt ON (pt.id=p.type_id)";
         Statement st;
         ResultSet rs;
-        try{
+        try {
             st = conn.createStatement();
             rs = st.executeQuery(query);
             Protocol protocol;
@@ -99,9 +101,9 @@ public class ProtocolController {
                 protocol.setRecorded(rs.getDate(7).toLocalDate());
                 protocol.setStatus(rs.getInt(8));
                 protocol.setPath(rs.getString(9));
-                //protocol.setRecorded(rs.getDate(10).toLocalDate()); }
-                //protocol.setRequested(rs.getDate(11).toLocalDate());
-                //protocol.setReceipted(rs.getDate(12).toLocalDate());
+                protocol.setRecorded(rs.getDate(10).toLocalDate());
+                protocol.setRequested(rs.getDate(11).toLocalDate());
+                protocol.setReceipted(rs.getDate(12).toLocalDate());
                 if(rs.getObject(13) != null) { protocol.setForwarded(rs.getDate(13).toLocalDate()); }
                 if(rs.getObject(14) != null) { protocol.setChecked(rs.getDate(14).toLocalDate()); }
                 protocol.setCreated(rs.getTimestamp(15).toLocalDateTime());

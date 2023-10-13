@@ -36,12 +36,8 @@ public class PersonView implements Initializable {
         String id = textfieldId.getText();
         String name = textfieldName.getText();
         if (name == null || name.isEmpty()) {
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("[protB] Aviso");
-            alert.setHeaderText("Campo deve ser preenchido.");
-            alert.setContentText("Nome");
-
-            alert.showAndWait();
+            CustomAlert.showAlert(Alert.AlertType.INFORMATION, null,
+                    "Campo deve ser preenchido.\nNome");
         }
         else {
             if (id == null || id.isEmpty()) {
@@ -53,6 +49,8 @@ public class PersonView implements Initializable {
             p.setName(name);
             if (PersonController.save(p)) {
                 fillTableViewPerson();
+            } else {
+                CustomAlert.showAlert(Alert.AlertType.ERROR,null,"Erro ao salvar.");
             }
         }
     }
@@ -106,10 +104,7 @@ public class PersonView implements Initializable {
             else {
                 msgAlert2 = "Erro ao excluir registro";
             }
-            Alert alert2 = new Alert(Alert.AlertType.INFORMATION);
-            alert2.setTitle("[protB] Exclusão");
-            alert2.setHeaderText(msgAlert2);
-            alert2.showAndWait();
+            CustomAlert.showAlert(Alert.AlertType.INFORMATION,null, msgAlert2);
         }
         fillTableViewPerson();
     }

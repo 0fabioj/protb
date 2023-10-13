@@ -1,5 +1,6 @@
 package core.controller;
 
+import app.controller.Protb;
 import core.model.Person;
 import core.model.ProtocolType;
 import database.PostgreSQLConnection;
@@ -10,8 +11,8 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ProtocolTypeController {
-    static public boolean save(ProtocolType pt) {
+public class ProtocolTypeController implements Protb.IDatabase {
+    public static boolean save(ProtocolType pt) {
         Connection conn = PostgreSQLConnection.connect();
         String query;
         List params = new ArrayList<>();
@@ -31,7 +32,7 @@ public class ProtocolTypeController {
         }
     }
 
-    static public boolean delete(int id)
+    public static boolean delete(int id)
     {
         Connection conn = PostgreSQLConnection.connect();
         String query = "DELETE FROM protocol_type WHERE id = " + id;
@@ -44,7 +45,7 @@ public class ProtocolTypeController {
         }
     }
 
-    static private int check(int id)
+    public static int check(int id)
     {
         Connection conn = PostgreSQLConnection.connect();
         String query = "SELECT count(*) FROM protocol_type WHERE id = " + id;
@@ -57,7 +58,7 @@ public class ProtocolTypeController {
         }
     }
 
-    static public ObservableList<ProtocolType> getList()
+    public static ObservableList<ProtocolType> getList()
     {
         ObservableList<ProtocolType> list1 = FXCollections.observableArrayList();
         Connection conn = PostgreSQLConnection.connect();

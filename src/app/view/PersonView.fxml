@@ -43,6 +43,15 @@
                   </ImageView>
                </graphic>
             </Button>
+            <Button mnemonicParsing="false" onAction="#actionCancel">
+                <graphic>
+                    <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
+                        <image>
+                            <Image url="@../../img/back.png" />
+                        </image>
+                    </ImageView>
+                </graphic>
+            </Button>
         </items>
       </ToolBar>
       <TitledPane prefHeight="43.0" prefWidth="600.0" text="Dados">

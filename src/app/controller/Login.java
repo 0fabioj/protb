@@ -1,6 +1,8 @@
 package app.controller;
 
 import javafx.application.Platform;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -49,7 +51,9 @@ public class Login {
 
         if(logininfo.containsKey(userId)) {
             if(logininfo.get(userId).equals(userPassword)) {
-                root = FXMLLoader.load(getClass().getResource("/app/view/MainWindow.fxml"));
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/app/view/MainWindow.fxml"));
+                root = loader.load();
+                //root = FXMLLoader.load(getClass().getResource("/app/view/MainWindow.fxml"));
                 stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
                 scene = new Scene(root);
                 stage.setScene(scene);
@@ -57,6 +61,16 @@ public class Login {
                 Rectangle2D primScreenBounds = Screen.getPrimary().getVisualBounds();
                 stage.setX((primScreenBounds.getWidth() - stage.getWidth()) / 2);
                 stage.setY((primScreenBounds.getHeight() - stage.getHeight()) / 2);
+
+                stage.focusedProperty().addListener(new ChangeListener<Boolean>()
+                {
+                    @Override
+                    public void changed(ObservableValue<? extends Boolean> ov, Boolean onHidden, Boolean onShown)
+                    {
+                        MainWindow mainWindow = loader.getController();
+                        mainWindow.updateTableView();
+                    }
+                });
             }
             else {
                 errorLabel.setText("errou senha!");

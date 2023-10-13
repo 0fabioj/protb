@@ -5,6 +5,8 @@ import core.controller.ProtocolTypeController;
 import core.model.Protocol;
 import core.model.ProtocolType;
 import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
@@ -12,6 +14,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -77,7 +80,8 @@ public class MainWindow implements Initializable {
                     if (newValue == null || newValue.isEmpty()) {
                         return true;
                     }
-                    if (protocol.getPerson().getName().toLowerCase().indexOf(newValue.toLowerCase()) != -1 ) {
+                    if (protocol.getPerson().getName().toLowerCase().contains(newValue.toLowerCase())) {
+                        //if (protocol.getPerson().getName().toLowerCase().indexOf(newValue.toLowerCase()) != -1 ) {
                         return true;
                     }
                     else
@@ -88,7 +92,8 @@ public class MainWindow implements Initializable {
                 filteredData.setPredicate(protocol -> {
                     if (filterType.getSelectionModel().getSelectedIndex() > 0) {
                         //if (protocol.getProtocolType().getDescription().indexOf(newValue) != -1 ) {
-                        if (protocol.getProtocolType().getDescription().indexOf(newValue.getDescription()) != -1 ) {
+                        //if (protocol.getProtocolType().getDescription().indexOf(newValue.getDescription()) != -1 ) {
+                        if (protocol.getProtocolType().getDescription().contains(newValue.getDescription())) {
                             return true;
                         }
                         else
@@ -146,6 +151,8 @@ public class MainWindow implements Initializable {
         fillComboType();
         fillComboStatus();
         updateTableView();
+
+
     }
 
     @FXML public void newProtocolWindow() throws IOException {

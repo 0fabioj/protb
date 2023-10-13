@@ -8,7 +8,7 @@ import java.util.List;
 
 public class PostgreSQLConnection {
     public static Connection conn;
-    final private static String url = "jdbc:postgresql://192.168.1.153:5432/protb";
+    final private static String url = "jdbc:postgresql://192.168.1.155:5432/protb";
     final private static String user = "pgsql";
     final private static String password = "1234";
 

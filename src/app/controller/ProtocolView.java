@@ -31,15 +31,14 @@ public class ProtocolView implements Initializable {
     @FXML private DatePicker dateForwarded;
     @FXML private DatePicker dateChecked;
     @FXML private Button buttonDel;
+    @FXML private Button buttonClear;
 
     public void setProtocol(Protocol p) {
         protocolLoad(p);
-        System.out.println("setProtocol():" + p.getId());
     }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        System.out.println("initialize()");
         fillComboStatus();
         fillComboType();
         fillComboPerson();
@@ -53,13 +52,13 @@ public class ProtocolView implements Initializable {
         comboType.getSelectionModel().select(p.getProtocolType());
         textSummary.setText(p.getSummary());
         dateRequested.setValue(p.getRequested());
-        //comboStatus.setValue(String.valueOf(p.getStatus()));
         comboStatus.setValue(p.getStatus());
         dateReceived.setValue(p.getReceipted());
         dateForwarded.setValue(p.getForwarded());
         dateChecked.setValue(p.getChecked());
 
         buttonDel.setDisable(false);
+        buttonClear.setDisable(true);
     }
 
     @FXML
@@ -107,8 +106,7 @@ public class ProtocolView implements Initializable {
             if (ProtocolController.save(p)) {
                 closeProtocolWindow(event);
             } else {
-                CustomAlert.showAlert(Alert.AlertType.ERROR,
-                        null,"Erro ao salvar.");
+                CustomAlert.showAlert(Alert.AlertType.ERROR,null,"Erro ao salvar.");
             }
         }
     }
@@ -119,7 +117,7 @@ public class ProtocolView implements Initializable {
         Alert alert1 = new Alert(Alert.AlertType.CONFIRMATION);
         alert1.setTitle("[protB] Exclusão");
         alert1.setHeaderText(null);
-        alert1.setContentText(textfieldId.getText());
+        alert1.setContentText("Confirma exclusão do protocolo:\n"+textfieldId.getText());
         alert1.showAndWait();
 
         String msgAlert2;
@@ -151,6 +149,20 @@ public class ProtocolView implements Initializable {
         controller.updateTableView();
  */
     }
+    @FXML public void actionClear(ActionEvent event) {
+        textfieldId.clear();
+        comboPerson.getSelectionModel().selectFirst();
+        comboType.getSelectionModel().selectFirst();
+        textSummary.clear();
+        comboStatus.getSelectionModel().selectFirst();
+        dateRecorded.setValue(LocalDate.now());
+        dateRequested.setValue(null);
+        dateReceived.setValue(LocalDate.now());
+        dateForwarded.setValue(null);
+        dateChecked.setValue(null);
+        buttonDel.setDisable(true);
+    }
+
 
     public void fillComboStatus() {
         try {

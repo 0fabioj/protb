@@ -37,11 +37,20 @@
                   </ImageView>
                </graphic>
             </Button>
+            <Button fx:id="buttonClear" mnemonicParsing="false" onAction="#actionClear">
+                <graphic>
+                    <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
+                        <image>
+                            <Image url="@../../img/erase.png" />
+                        </image>
+                    </ImageView>
+                </graphic>
+            </Button>
             <Button mnemonicParsing="false" onAction="#actionCancel">
                <graphic>
                   <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../../img/find.png" />
+                        <Image url="@../../img/back.png" />
                      </image>
                   </ImageView>
                </graphic>
@@ -53,7 +62,7 @@
             <GridPane>
                <children>
                   <Label text="Número" />
-                  <TextField fx:id="textfieldId" editable="false" maxWidth="-Infinity" prefWidth="64.0" GridPane.columnIndex="1" />
+                  <TextField id="text-field-id" fx:id="textfieldId" editable="false" maxWidth="-Infinity" prefWidth="64.0" GridPane.columnIndex="1" />
                   <Label text="Data" GridPane.columnIndex="2" />
                   <DatePicker fx:id="dateRecorded" maxWidth="-Infinity" prefWidth="128.0" GridPane.columnIndex="3" />
                </children>

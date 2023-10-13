@@ -6,9 +6,12 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.Stage;
+import javafx.stage.Window;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -114,5 +117,16 @@ public class PersonView implements Initializable {
         textfieldId.clear();
         textfieldName.clear();
         buttonDel.setDisable(true);
+    }
+
+    @FXML public void actionCancel(ActionEvent event) {
+        closePersonWindow(event);
+    }
+
+    public void closePersonWindow(ActionEvent event) {
+        Window window = ((Node)(event.getSource())).getScene().getWindow();
+        if (window instanceof Stage){
+            ((Stage) window).close();
+        }
     }
 }

@@ -20,3 +20,13 @@ TitledPane {
 #title {
     -fx-font-size: 14pt;
 }
+
+#text-field-id {
+    -fx-background-color: #b0c4de;
+    -fx-background-radius: 2;
+    -fx-background-insets: 0, 1;
+}
+#text-field-id:selected {
+    -fx-border-width: 1;
+    -fx-border-color: #blue;
+}

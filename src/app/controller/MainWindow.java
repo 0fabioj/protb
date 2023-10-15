@@ -5,8 +5,6 @@ import core.controller.ProtocolTypeController;
 import core.model.Protocol;
 import core.model.ProtocolType;
 import javafx.beans.property.SimpleObjectProperty;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
@@ -14,7 +12,6 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -32,9 +29,6 @@ public class MainWindow implements Initializable {
     private Stage stage;
     private Scene scene;
     private Parent root;
-
-    private ObservableList<Protocol> listProtocol;
-
 
     @FXML private TableView<Protocol> tableView1;
     @FXML private TableColumn<Protocol, String> colSummary;
@@ -61,13 +55,9 @@ public class MainWindow implements Initializable {
     @FXML
     private DatePicker filterDate2;
 
-    @FXML public void refreshTableViewProtocol(ActionEvent event) {
-        System.out.println("Refresh()");
-        updateTableView();
-    }
     public void updateTableView() {
         try {
-            listProtocol = ProtocolController.getList();
+            ObservableList<Protocol> listProtocol = ProtocolController.getList();
             colId.setCellValueFactory(new PropertyValueFactory<Protocol, Integer>("id"));
             colPerson.setCellValueFactory(param -> new SimpleObjectProperty<>(param.getValue().getPerson().getName()));
             colType.setCellValueFactory(param -> new SimpleObjectProperty<>(param.getValue().getProtocolType().getDescription()));
@@ -110,6 +100,8 @@ public class MainWindow implements Initializable {
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
+
+        System.out.println("Update()");
     }
 
     public void fillComboType() {
@@ -151,16 +143,18 @@ public class MainWindow implements Initializable {
         fillComboType();
         fillComboStatus();
         updateTableView();
-
-
     }
 
     @FXML public void newProtocolWindow() throws IOException {
         if (stage == null || !stage.isShowing()) {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/app/view/ProtocolView.fxml"));
+            root = loader.load();
+            ProtocolView pv = loader.getController();
+            pv.setProtocol(new Protocol(0));
             stage = new Stage();
-            Parent loaderDetail = FXMLLoader.load(getClass().getResource("/app/view/ProtocolView.fxml"));
-            stage.setScene(new Scene(loaderDetail));
             stage.setTitle("[protB] Novo Protocolo");
+            scene = new Scene(root);
+            stage.setScene(scene);
             stage.show();
         } else {
             stage.toFront();

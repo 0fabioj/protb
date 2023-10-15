@@ -1,9 +1,6 @@
 package database;
 
-import javafx.util.Pair;
-
 import java.sql.*;
-import java.util.ArrayList;
 import java.util.List;
 
 public class PostgreSQLConnection {
@@ -48,8 +45,9 @@ public class PostgreSQLConnection {
             int result = -1;
             int index = 1;
             if (null != params && !params.isEmpty()) {
-                for (int i = 0; i < params.size(); i ++) {
-                    pstmt.setObject(index ++, params.get(i));
+                //for (int i = 0; i < params.size(); i ++) {
+                for (Object param : params) {
+                    pstmt.setObject(index++, param);
                 }
             }
             result = pstmt.executeUpdate();

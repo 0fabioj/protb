@@ -1,6 +1,5 @@
 package app.controller;
 
-import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
@@ -21,12 +20,6 @@ import java.io.IOException;
 import java.util.HashMap;
 
 public class Login {
-    private Stage stage;
-    private Scene scene;
-    private Parent root;
-
-    @FXML
-    Button cancelButton;
     @FXML
     Button okButton;
     @FXML
@@ -35,11 +28,6 @@ public class Login {
     PasswordField userPasswordField;
     @FXML
     Label errorLabel;
-
-    @FXML
-    protected void action_cancelButton(ActionEvent event) throws IOException {
-        Platform.exit();
-    }
 
     @FXML
     protected void action_okButton(ActionEvent event) throws IOException {
@@ -52,10 +40,10 @@ public class Login {
         if(logininfo.containsKey(userId)) {
             if(logininfo.get(userId).equals(userPassword)) {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/app/view/MainWindow.fxml"));
-                root = loader.load();
+                Parent root = loader.load();
                 //root = FXMLLoader.load(getClass().getResource("/app/view/MainWindow.fxml"));
-                stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
-                scene = new Scene(root);
+                Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                Scene scene = new Scene(root);
                 stage.setScene(scene);
                 stage.show();
                 Rectangle2D primScreenBounds = Screen.getPrimary().getVisualBounds();
@@ -67,8 +55,10 @@ public class Login {
                     @Override
                     public void changed(ObservableValue<? extends Boolean> ov, Boolean onHidden, Boolean onShown)
                     {
-                        MainWindow mainWindow = loader.getController();
-                        mainWindow.updateTableView();
+                        if(onShown) {
+                            MainWindow mainWindow = loader.getController();
+                            mainWindow.updateTableView();
+                        }
                     }
                 });
             }

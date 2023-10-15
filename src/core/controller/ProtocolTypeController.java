@@ -1,7 +1,6 @@
 package core.controller;
 
 import app.controller.Protb;
-import core.model.Person;
 import core.model.ProtocolType;
 import database.PostgreSQLConnection;
 import javafx.collections.FXCollections;

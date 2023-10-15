@@ -1,6 +1,5 @@
 package app.controller;
 
-import core.model.Person;
 import javafx.application.Application;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
@@ -27,19 +26,19 @@ public class Protb extends Application {
     public static void main(String[] args) { launch(args); }
 
     public interface IDatabase {
-        public static boolean save(Object obj) {
+        static boolean save(Object obj) {
             return false;
         }
 
-        public static boolean delete(int id) {
+        static boolean delete(int id) {
             return false;
         }
 
-        public static int check(int id) {
+        static int check(int id) {
             return 0;
         }
 
-        public static ObservableList<Object> getList() {
+        static ObservableList<Object> getList() {
             return null;
         }
     }

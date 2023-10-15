@@ -57,7 +57,7 @@
             </Button>
         </items>
       </ToolBar>
-      <TitledPane text="Protocolo">
+      <TitledPane collapsible="false" text="Protocolo">
          <content>
             <GridPane>
                <children>
@@ -78,7 +78,7 @@
             </GridPane>
          </content>
       </TitledPane>
-      <TitledPane prefHeight="190.0" prefWidth="784.0" text="Requerimento">
+      <TitledPane collapsible="false" prefHeight="190.0" prefWidth="784.0" text="Requerimento">
          <content>
             <GridPane>
               <children>
@@ -104,7 +104,7 @@
             </GridPane>
          </content>
       </TitledPane>
-      <TitledPane prefHeight="112.0" prefWidth="784.0" text="Situação">
+      <TitledPane collapsible="false" prefHeight="112.0" prefWidth="784.0" text="Situação">
          <content>
             <GridPane>
                <children>

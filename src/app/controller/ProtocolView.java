@@ -6,6 +6,7 @@ import core.controller.ProtocolTypeController;
 import core.model.Person;
 import core.model.Protocol;
 import core.model.ProtocolType;
+import database.PostgreSQLConnection;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -16,6 +17,8 @@ import javafx.stage.Window;
 import javafx.util.StringConverter;
 
 import java.net.URL;
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ResourceBundle;
 
@@ -34,7 +37,12 @@ public class ProtocolView implements Initializable {
     @FXML private Button buttonClear;
 
     public void setProtocol(Protocol p) {
-        protocolLoad(p);
+        if(p.getId()>0) {
+            protocolLoad(p);
+        } else {
+            protocolNew();
+        }
+
     }
 
     @Override
@@ -43,6 +51,17 @@ public class ProtocolView implements Initializable {
         fillComboType();
         fillComboPerson();
         buttonDel.setDisable(true);
+    }
+
+    public void protocolNew() {
+        Connection conn = PostgreSQLConnection.connect();
+        try {
+            textfieldId.setText(String.valueOf(PostgreSQLConnection.NextFreeId(conn, "protocol")));
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            PostgreSQLConnection.closeDatabase(conn);
+        }
     }
 
     public void protocolLoad(Protocol p) {
@@ -149,7 +168,7 @@ public class ProtocolView implements Initializable {
         controller.updateTableView();
  */
     }
-    @FXML public void actionClear(ActionEvent event) {
+    @FXML public void actionClear() {
         textfieldId.clear();
         comboPerson.getSelectionModel().selectFirst();
         comboType.getSelectionModel().selectFirst();
@@ -215,7 +234,7 @@ public class ProtocolView implements Initializable {
         }
     }
 
-    @FXML public void actionChangeComboPerson(ActionEvent event){
+    @FXML public void actionChangeComboPerson(){
         System.out.print("Combo Person Selected:");
         System.out.print(comboPerson.getSelectionModel().getSelectedItem().getId());
         System.out.println(comboPerson.getSelectionModel().getSelectedItem().getName());

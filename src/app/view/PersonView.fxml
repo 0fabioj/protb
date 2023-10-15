@@ -54,19 +54,18 @@
             </Button>
         </items>
       </ToolBar>
-      <TitledPane prefHeight="43.0" prefWidth="600.0" text="Dados">
+      <TitledPane collapsible="false" prefHeight="43.0" prefWidth="600.0" text="Dados">
          <content>
             <HBox prefHeight="100.0" prefWidth="200.0" styleClass="HBox">
                <children>
-                     <Label text="Id" />
-                     <TextField fx:id="textfieldId" editable="false" prefHeight="24.0" prefWidth="94.0" />
                      <Label text="Nome" />
-                     <TextField fx:id="textfieldName" prefHeight="24.0" prefWidth="390.0" />
+                     <TextField fx:id="textfieldName" prefHeight="24.0" prefWidth="433.0" />
+                     <TextField fx:id="textfieldId" editable="false" prefHeight="24.0" prefWidth="67.0" visible="false" />
                </children>
             </HBox>
          </content>
       </TitledPane>
-      <TitledPane prefHeight="274.0" prefWidth="600.0" text="Lista">
+      <TitledPane collapsible="false" prefHeight="274.0" prefWidth="600.0" text="Lista">
          <content>
              <TableView fx:id="tableviewPerson" onMouseClicked="#actionEdit" prefHeight="319.0" prefWidth="600.0">
                  <columns>

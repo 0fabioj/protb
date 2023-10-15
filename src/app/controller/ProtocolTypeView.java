@@ -1,6 +1,5 @@
 package app.controller;
 
-import core.controller.PersonController;
 import core.controller.ProtocolTypeController;
 import core.model.ProtocolType;
 import javafx.collections.ObservableList;
@@ -35,7 +34,7 @@ public class ProtocolTypeView implements Initializable {
     }
 
     @FXML
-    public void actionSave(ActionEvent event) {
+    public void actionSave() {
         ProtocolType pt = new ProtocolType();
         String id = textfieldId.getText();
         String desc = textfieldDesc.getText();
@@ -68,7 +67,7 @@ public class ProtocolTypeView implements Initializable {
         buttonDel.setDisable(true);
         try {
             ObservableList<ProtocolType> data = ProtocolTypeController.getList();
-            colDesc.setCellValueFactory(new PropertyValueFactory<ProtocolType, String>("description"));
+            colDesc.setCellValueFactory(new PropertyValueFactory<>("description"));
 
             tableviewType.setItems(data);
         } catch (Exception e) {
@@ -88,14 +87,11 @@ public class ProtocolTypeView implements Initializable {
             catch (IndexOutOfBoundsException e) {
                 System.err.println("IndexOutOfBoundsException: " + e.getMessage());
             }
-            finally {
-                pt = null;
-            }
         }
     }
 
     @FXML
-    public void actionDel(ActionEvent event) {
+    public void actionDel() {
         int index = Integer.parseInt(textfieldId.getText());
         Alert alert1 = new Alert(Alert.AlertType.CONFIRMATION);
         alert1.setTitle("[protB] Exclusão");
@@ -119,7 +115,7 @@ public class ProtocolTypeView implements Initializable {
     }
 
     @FXML
-    public void actionClear(ActionEvent event) {
+    public void actionClear() {
         textfieldId.clear();
         textfieldDesc.clear();
         buttonDel.setDisable(true);

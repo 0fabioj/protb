@@ -34,7 +34,7 @@ public class PersonView implements Initializable {
     }
 
     @FXML
-    public void actionSave(ActionEvent event) {
+    public void actionSave() {
         Person p = new Person();
         String id = textfieldId.getText();
         String name = textfieldName.getText();
@@ -65,7 +65,7 @@ public class PersonView implements Initializable {
         buttonDel.setDisable(true);
         try {
             ObservableList<Person> data = PersonController.getList();
-            colName.setCellValueFactory(new PropertyValueFactory<Person, String>("name"));
+            colName.setCellValueFactory(new PropertyValueFactory<>("name"));
 
             tableviewPerson.setItems(data);
         } catch (Exception e) {
@@ -85,14 +85,11 @@ public class PersonView implements Initializable {
             catch (IndexOutOfBoundsException e) {
                 System.err.println("IndexOutOfBoundsException: " + e.getMessage());
             }
-            finally {
-                p = null;
-            }
         }
     }
 
     @FXML
-    public void actionDel(ActionEvent event) {
+    public void actionDel() {
         int index = Integer.parseInt(textfieldId.getText());
         Alert alert1 = new Alert(Alert.AlertType.CONFIRMATION);
         alert1.setTitle("[protB] Exclusão");
@@ -113,7 +110,7 @@ public class PersonView implements Initializable {
     }
 
     @FXML
-    public void actionClear(ActionEvent event) {
+    public void actionClear() {
         textfieldId.clear();
         textfieldName.clear();
         buttonDel.setDisable(true);

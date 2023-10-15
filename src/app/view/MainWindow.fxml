@@ -5,6 +5,7 @@
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Pagination?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
@@ -48,10 +49,9 @@
                   </ImageView>
                </graphic>
             </Button>
-            <Button mnemonicParsing="false" onAction="#refreshTableViewProtocol" text="Atualizar" />
         </items>
       </ToolBar>
-      <TitledPane prefHeight="118.0" prefWidth="1024.0" text="Filtros">
+      <TitledPane collapsible="false" prefHeight="118.0" prefWidth="1024.0" text="Filtros">
          <content>
             <GridPane>
                <children>
@@ -89,15 +89,15 @@
             <Insets />
          </VBox.margin>
       </TitledPane>
-      <TitledPane prefHeight="332.0" prefWidth="1024.0" text="Protocolos">
+      <TitledPane collapsible="false" prefHeight="332.0" prefWidth="1024.0" text="Protocolos">
          <content>
-            <TableView fx:id="tableView1" onMouseClicked="#actionProtocolEdit" prefHeight="365.0" prefWidth="752.0">
+            <TableView fx:id="tableView1" onMouseClicked="#actionProtocolEdit" prefWidth="1006.0">
               <columns>
                 <TableColumn fx:id="colId" prefWidth="64.0" text="Numero" />
-                <TableColumn fx:id="colPerson" prefWidth="266.0" text="Requerente" />
-                  <TableColumn fx:id="colType" prefWidth="207.0" text="Tipo" />
                   <TableColumn fx:id="colRecorded" prefWidth="132.0" text="Data" />
-                  <TableColumn fx:id="colStatus" prefWidth="135.0" text="Status" />
+                <TableColumn fx:id="colPerson" prefWidth="297.0" text="Requerente" />
+                  <TableColumn fx:id="colType" prefWidth="272.0" text="Tipo" />
+                  <TableColumn fx:id="colStatus" prefWidth="141.0" text="Status" />
               </columns>
             </TableView>
          </content>
@@ -105,5 +105,6 @@
             <Insets />
          </VBox.margin>
       </TitledPane>
+      <Pagination maxPageIndicatorCount="7" />
    </children>
 </VBox>

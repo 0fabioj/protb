@@ -39,8 +39,7 @@ public class PersonView implements Initializable {
         String id = textfieldId.getText();
         String name = textfieldName.getText();
         if (name == null || name.isEmpty()) {
-            CustomAlert.showAlert(Alert.AlertType.INFORMATION, null,
-                    "Campo deve ser preenchido.\nNome");
+            CustomAlert.showInformation("Campo deve ser preenchido.\nNome");
         }
         else {
             if (id == null || id.isEmpty()) {
@@ -53,7 +52,7 @@ public class PersonView implements Initializable {
             if (PersonController.save(p)) {
                 fillTableViewPerson();
             } else {
-                CustomAlert.showAlert(Alert.AlertType.ERROR,null,"Erro ao salvar.");
+                CustomAlert.showError("Erro ao salvar.");
             }
         }
     }
@@ -91,20 +90,14 @@ public class PersonView implements Initializable {
     @FXML
     public void actionDel() {
         int index = Integer.parseInt(textfieldId.getText());
-        Alert alert1 = new Alert(Alert.AlertType.CONFIRMATION);
-        alert1.setTitle("[protB] Exclusão");
-        alert1.setHeaderText("Deseja excluir pessoa:");
-        alert1.setContentText(textfieldName.getText());
-        alert1.showAndWait();
-        String msgAlert2;
-        if (alert1.getResult() == ButtonType.OK) {
+        boolean res = CustomAlert.showConfirmation("Deseja excluir pessoa:");
+        if (res) {
             if (PersonController.delete(index)) {
-                msgAlert2 = "Registro excluido com sucesso";
+                CustomAlert.showInformation("Registro excluido com sucesso");
             }
             else {
-                msgAlert2 = "Erro ao excluir registro";
+                CustomAlert.showError("Erro ao excluir registro");
             }
-            CustomAlert.showAlert(Alert.AlertType.INFORMATION,null, msgAlert2);
         }
         fillTableViewPerson();
     }

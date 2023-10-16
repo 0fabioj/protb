@@ -1,10 +1,11 @@
 package core.controller;
 
-import app.controller.Protb;
+import app.controller.CustomAlert;
 import core.model.Person;
 import core.model.Protocol;
 import core.model.ProtocolType;
-import database.PostgreSQLConnection;
+import database.IDatabase;
+import database.PostgreSQL;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -15,9 +16,9 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ProtocolController implements Protb.IDatabase {
+public class ProtocolController implements IDatabase {
     public static boolean save(Protocol p) {
-        Connection conn = PostgreSQLConnection.connect();
+        Connection conn = PostgreSQL.connect();
         String query;
         List<Object> params = new ArrayList<>();
         params.add(p.getPerson().getId());
@@ -38,53 +39,54 @@ public class ProtocolController implements Protb.IDatabase {
                         "WHERE id=?;";
                 params.add(p.getId());
             } else {
-                query = "INSERT INTO protocol VALUES(" + PostgreSQLConnection.NextFreeId(conn, "protocol") +
+                query = "INSERT INTO protocol VALUES(" + PostgreSQL.NextFreeId(conn, "protocol") +
                         ",?,?,?,?,?,?,?,?,?,?,now(),null);";
             }
-            return PostgreSQLConnection.ExecQuery1(conn, query, params);
+            return PostgreSQL.ExecQuery1(conn, query, params);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } finally {
-            PostgreSQLConnection.closeDatabase(conn);
+            PostgreSQL.closeDatabase(conn);
         }
     }
 
     public static boolean delete(int id)
     {
-        Connection conn = PostgreSQLConnection.connect();
-        String query = "DELETE FROM protocol WHERE id = " + id;
+        Connection conn = PostgreSQL.connect();
+        String query = "DELETE FROM protocol WHERE id=" + id;
         try {
-            return PostgreSQLConnection.ExecQuery1(conn, query, null);
+            return PostgreSQL.ExecQuery1(conn, query, null);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } finally {
-            PostgreSQLConnection.closeDatabase(conn);
+            PostgreSQL.closeDatabase(conn);
         }
     }
 
     public static int check(int id)
     {
-        Connection conn = PostgreSQLConnection.connect();
-        String query = "SELECT count(*) FROM protocol WHERE id = " + id;
+        Connection conn = PostgreSQL.connect();
+        String query = "SELECT count(*) FROM protocol WHERE id=" + id;
         try {
-            return PostgreSQLConnection.SelectCount(conn, query);
+            return PostgreSQL.SelectCount(conn, query);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } finally {
-            PostgreSQLConnection.closeDatabase(conn);
+            PostgreSQL.closeDatabase(conn);
         }
     }
 
     public static ObservableList<Protocol> getList()
     {
         ObservableList<Protocol> protocolList = FXCollections.observableArrayList();
-        Connection conn = PostgreSQLConnection.connect();
+        Connection conn = PostgreSQL.connect();
         String query = "SELECT p.id, pe.id, pe.name, pt.id, pt.description, "
                 +"p.summary, p.recorded, p.status, p.path, "
                 +"p.recorded, p.requested, p.receipted, p.forwarded, p.checked, p.created, p.altered "
                 +"FROM protocol p "
                 +"INNER JOIN person pe ON (pe.id=p.person_id) "
-                +"INNER JOIN protocol_type pt ON (pt.id=p.type_id)";
+                +"INNER JOIN protocol_type pt ON (pt.id=p.type_id) "
+                +"ORDER BY p.id DESC;";
         Statement st;
         ResultSet rs;
         try {
@@ -111,9 +113,9 @@ public class ProtocolController implements Protb.IDatabase {
                 protocolList.add(protocol);
             }
         } catch(SQLException e){
-            System.out.println(e.getMessage());
+            CustomAlert.showError(e.getMessage());
         } finally {
-            PostgreSQLConnection.closeDatabase(conn);
+            PostgreSQL.closeDatabase(conn);
         }
 
         return protocolList;

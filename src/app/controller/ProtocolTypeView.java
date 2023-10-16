@@ -39,12 +39,7 @@ public class ProtocolTypeView implements Initializable {
         String id = textfieldId.getText();
         String desc = textfieldDesc.getText();
         if (desc == null || desc.isEmpty()) {
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("[protB] Aviso");
-            alert.setHeaderText("Campo deve ser preenchido.");
-            alert.setContentText("Descrição");
-
-            alert.showAndWait();
+            CustomAlert.showInformation("Campo deve ser preenchido:\nDescrição");
         }
         else {
             if (id == null || id.isEmpty()) {
@@ -68,7 +63,6 @@ public class ProtocolTypeView implements Initializable {
         try {
             ObservableList<ProtocolType> data = ProtocolTypeController.getList();
             colDesc.setCellValueFactory(new PropertyValueFactory<>("description"));
-
             tableviewType.setItems(data);
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -93,25 +87,16 @@ public class ProtocolTypeView implements Initializable {
     @FXML
     public void actionDel() {
         int index = Integer.parseInt(textfieldId.getText());
-        Alert alert1 = new Alert(Alert.AlertType.CONFIRMATION);
-        alert1.setTitle("[protB] Exclusão");
-        alert1.setHeaderText("Deseja excluir tipo de protocolo:");
-        alert1.setContentText(textfieldDesc.getText());
-        alert1.showAndWait();
-        String msgAlert2;
-        if (alert1.getResult() == ButtonType.OK) {
+        boolean res = CustomAlert.showConfirmation("Deseja excluir tipo de protocolo:");
+        if (res) {
             if (ProtocolTypeController.delete(index)) {
-                msgAlert2 = "Registro excluido com sucesso";
+                CustomAlert.showInformation("Registro excluido com sucesso");
+                fillTableViewType();
             }
             else {
-                msgAlert2 = "Erro ao excluir registro";
+                CustomAlert.showError("Erro ao excluir registro");
             }
-            Alert alert2 = new Alert(Alert.AlertType.INFORMATION);
-            alert2.setTitle("[protB] Exclusão");
-            alert2.setHeaderText(msgAlert2);
-            alert2.showAndWait();
         }
-        fillTableViewType();
     }
 
     @FXML

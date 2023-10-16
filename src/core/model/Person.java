@@ -1,8 +1,11 @@
 package core.model;
 
+import java.time.LocalDate;
+
 public class Person {
-    private int id, hiring, state, country;
-    private String name, identity, address, addressNumber;
+    private int id, state, country;
+    private LocalDate hiring;
+    private String name, numberId, address, addressNumber;
     private String district, city, zipCode, phone1, phone2, email;
 
 
@@ -24,11 +27,11 @@ public class Person {
         this.id = id;
     }
 
-    public int getHiring() {
+    public LocalDate getHiring() {
         return hiring;
     }
 
-    public void setHiring(int hiring) {
+    public void setHiring(LocalDate hiring) {
         this.hiring = hiring;
     }
 
@@ -56,12 +59,12 @@ public class Person {
         this.name = name;
     }
 
-    public String getIdentity() {
-        return identity;
+    public String getNumberId() {
+        return numberId;
     }
 
-    public void setIdentity(String identity) {
-        this.identity = identity;
+    public void setNumberId(String numberId) {
+        this.numberId = numberId;
     }
 
     public String getAddress() {

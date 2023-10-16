@@ -6,7 +6,7 @@ import core.controller.ProtocolTypeController;
 import core.model.Person;
 import core.model.Protocol;
 import core.model.ProtocolType;
-import database.PostgreSQLConnection;
+import database.PostgreSQL;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -38,11 +38,10 @@ public class ProtocolView implements Initializable {
 
     public void setProtocol(Protocol p) {
         if(p.getId()>0) {
-            protocolLoad(p);
+            actionLoad(p);
         } else {
-            protocolNew();
+            actionNew();
         }
-
     }
 
     @Override
@@ -53,18 +52,18 @@ public class ProtocolView implements Initializable {
         buttonDel.setDisable(true);
     }
 
-    public void protocolNew() {
-        Connection conn = PostgreSQLConnection.connect();
+    public void actionNew() {
+        Connection conn = PostgreSQL.connect();
         try {
-            textfieldId.setText(String.valueOf(PostgreSQLConnection.NextFreeId(conn, "protocol")));
+            textfieldId.setText(String.valueOf(PostgreSQL.NextFreeId(conn, "protocol")));
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } finally {
-            PostgreSQLConnection.closeDatabase(conn);
+            PostgreSQL.closeDatabase(conn);
         }
     }
 
-    public void protocolLoad(Protocol p) {
+    public void actionLoad(Protocol p) {
         textfieldId.setText(String.valueOf(p.getId()));
         dateRecorded.setValue(p.getRecorded());
         comboPerson.getSelectionModel().select(p.getPerson());
@@ -94,17 +93,13 @@ public class ProtocolView implements Initializable {
         LocalDate checked = dateChecked.getValue();
 
         if (personId <= 0) {
-            CustomAlert.showAlert(Alert.AlertType.INFORMATION,
-                    null,"Campo deve ser selecionado: \nRequerente");
+            CustomAlert.showInformation("Campo deve ser selecionado:\nRequerente");
         } else if (typeId <= 0) {
-            CustomAlert.showAlert(Alert.AlertType.INFORMATION,
-                    null,"Campo deve ser selecionado: \nTipo");
+            CustomAlert.showInformation("Campo deve ser selecionado:\nTipo");
         } else if (recorded == null) {
-            CustomAlert.showAlert(Alert.AlertType.INFORMATION,
-                    null,"Data do Protocolo deve ser preenchida.");
+            CustomAlert.showInformation("Campo deve ser preenchido:\nData do Protocolo");
         } else if (receipted== null) {
-                CustomAlert.showAlert(Alert.AlertType.INFORMATION,
-                        null,"Data do Requerimento deve ser preenchida.");
+            CustomAlert.showInformation("Campo deve ser preenchido:\nData do Requerimento");
         } else {
             Protocol p = new Protocol();
             if (protocolId == null || protocolId.isEmpty()) {
@@ -123,50 +118,36 @@ public class ProtocolView implements Initializable {
             p.setForwarded(forwarded);
             p.setChecked(checked);
             if (ProtocolController.save(p)) {
-                closeProtocolWindow(event);
+                actionCloseProtocolWindow(event);
             } else {
-                CustomAlert.showAlert(Alert.AlertType.ERROR,null,"Erro ao salvar.");
+                CustomAlert.showError("Erro ao salvar.");
             }
         }
     }
 
     @FXML public void actionDel(ActionEvent event) {
         int index = Integer.parseInt(textfieldId.getText());
-
-        Alert alert1 = new Alert(Alert.AlertType.CONFIRMATION);
-        alert1.setTitle("[protB] Exclusão");
-        alert1.setHeaderText(null);
-        alert1.setContentText("Confirma exclusão do protocolo:\n"+textfieldId.getText());
-        alert1.showAndWait();
-
-        String msgAlert2;
-        if (alert1.getResult() == ButtonType.OK) {
+        boolean res = CustomAlert.showConfirmation("Confirma exclusão do protocolo:\n"+textfieldId.getText());
+        if (res) {
             if (ProtocolController.delete(index)) {
-                msgAlert2 = "Registro excluido com sucesso";
-                closeProtocolWindow(event);
+                CustomAlert.showInformation("Registro excluido com sucesso.");
+                actionCloseProtocolWindow(event);
             }
             else {
-                msgAlert2 = "Erro ao excluir registro";
+                CustomAlert.showError("Erro ao excluir registro.");
             }
-            CustomAlert.showAlert(Alert.AlertType.INFORMATION,
-                    null,msgAlert2);
         }
     }
 
     @FXML public void actionCancel(ActionEvent event) {
-        closeProtocolWindow(event);
+        actionCloseProtocolWindow(event);
     }
 
-    public void closeProtocolWindow(ActionEvent event) {
+    public void actionCloseProtocolWindow(ActionEvent event) {
         Window window = ((Node)(event.getSource())).getScene().getWindow();
         if (window instanceof Stage){
             ((Stage) window).close();
         }
-/*
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/app/view/MainWindow.fxml"));
-        MainWindow controller = (MainWindow) loader.getController();
-        controller.updateTableView();
- */
     }
     @FXML public void actionClear() {
         textfieldId.clear();
@@ -182,7 +163,6 @@ public class ProtocolView implements Initializable {
         buttonDel.setDisable(true);
     }
 
-
     public void fillComboStatus() {
         try {
             comboStatus.getItems().setAll("Recebido","Remetido","Deferido","Indeferido","Cancelado");
@@ -197,7 +177,7 @@ public class ProtocolView implements Initializable {
             comboType.getItems().clear();
             comboType.getItems().setAll(ProtocolTypeController.getList());
             comboType.getSelectionModel().selectFirst();
-            comboType.setConverter(new StringConverter<ProtocolType>() {
+            comboType.setConverter(new StringConverter<>() {
                 @Override
                 public String toString(ProtocolType pt) {
                     return pt == null ? "" : pt.getDescription();
@@ -218,7 +198,7 @@ public class ProtocolView implements Initializable {
             comboPerson.getItems().clear();
             comboPerson.getItems().setAll(PersonController.getList());
             comboPerson.getSelectionModel().selectFirst();
-            comboPerson.setConverter(new StringConverter<Person>() {
+            comboPerson.setConverter(new StringConverter<>() {
                 @Override
                 public String toString(Person p) {
                     return p == null ? "" : p.getName();
@@ -233,11 +213,4 @@ public class ProtocolView implements Initializable {
             System.out.println(e.getMessage());
         }
     }
-
-    @FXML public void actionChangeComboPerson(){
-        System.out.print("Combo Person Selected:");
-        System.out.print(comboPerson.getSelectionModel().getSelectedItem().getId());
-        System.out.println(comboPerson.getSelectionModel().getSelectedItem().getName());
-    }
-
 }

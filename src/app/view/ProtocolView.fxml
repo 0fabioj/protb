@@ -83,7 +83,7 @@
             <GridPane>
               <children>
                   <Label text="Requerente" />
-                  <ComboBox fx:id="comboPerson" maxWidth="-Infinity" onAction="#actionChangeComboPerson" prefWidth="300.0" GridPane.columnIndex="1" />
+                  <ComboBox fx:id="comboPerson" maxWidth="-Infinity" prefWidth="300.0" GridPane.columnIndex="1" />
                   <Label text="Tipo" GridPane.rowIndex="1" />
                   <ComboBox fx:id="comboType" maxWidth="-Infinity" prefWidth="300.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                   <Label text="Resumo" GridPane.rowIndex="2" />

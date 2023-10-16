@@ -8,7 +8,6 @@ import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -31,7 +30,6 @@ public class MainWindow implements Initializable {
     private Parent root;
 
     @FXML private TableView<Protocol> tableView1;
-    @FXML private TableColumn<Protocol, String> colSummary;
     @FXML
     private TableColumn<Protocol, Integer> colId;
     @FXML
@@ -58,11 +56,11 @@ public class MainWindow implements Initializable {
     public void updateTableView() {
         try {
             ObservableList<Protocol> listProtocol = ProtocolController.getList();
-            colId.setCellValueFactory(new PropertyValueFactory<Protocol, Integer>("id"));
+            colId.setCellValueFactory(new PropertyValueFactory<>("id"));
             colPerson.setCellValueFactory(param -> new SimpleObjectProperty<>(param.getValue().getPerson().getName()));
             colType.setCellValueFactory(param -> new SimpleObjectProperty<>(param.getValue().getProtocolType().getDescription()));
-            colRecorded.setCellValueFactory(new PropertyValueFactory<Protocol, LocalDateTime>("recorded"));
-            colStatus.setCellValueFactory(new PropertyValueFactory<Protocol, String>("status"));
+            colRecorded.setCellValueFactory(new PropertyValueFactory<>("recorded"));
+            colStatus.setCellValueFactory(new PropertyValueFactory<>("status"));
 
             FilteredList<Protocol> filteredData = new FilteredList<>(listProtocol, b -> true);
             filterPerson.textProperty().addListener((observable, oldValue, newValue) -> {
@@ -120,8 +118,7 @@ public class MainWindow implements Initializable {
 
                 @Override
                 public ProtocolType fromString(String s) {
-                    ProtocolType pt = new ProtocolType();
-                    return pt;
+                    return new ProtocolType();
                 }
             });
         } catch (Exception e) {
@@ -170,7 +167,7 @@ public class MainWindow implements Initializable {
                     root = loader.load();
 
                     ProtocolView pv = loader.getController();
-                    //pv.protocolLoad(p);
+                    //pv.actionLoad(p);
                     pv.setProtocol(p);
 
                     //stage = (Stage)((Node)event.getSource()).getScene().getWindow();
@@ -185,9 +182,6 @@ public class MainWindow implements Initializable {
             }
             catch (IndexOutOfBoundsException e) {
                 System.err.println("IndexOutOfBoundsException: " + e.getMessage());
-            }
-            finally {
-                p = null;
             }
         }
     }

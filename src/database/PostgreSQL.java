@@ -1,11 +1,14 @@
 package database;
 
+import app.controller.CustomAlert;
+import javafx.collections.ObservableList;
+
 import java.sql.*;
 import java.util.List;
 
-public class PostgreSQLConnection {
+public class PostgreSQL {
     public static Connection conn;
-    final private static String url = "jdbc:postgresql://192.168.1.155:5432/protb";
+    final private static String url = "jdbc:postgresql://192.168.1.157:5432/protb";
     final private static String user = "pgsql";
     final private static String password = "1234";
 
@@ -15,7 +18,7 @@ public class PostgreSQLConnection {
             conn = DriverManager.getConnection(url, user, password);
             //System.out.println("Opened database successfully");
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            CustomAlert.showError(e.getMessage());
         }
         return conn;
     }
@@ -39,8 +42,8 @@ public class PostgreSQLConnection {
     }
 
     public static boolean ExecQuery1(Connection conn, String query, List params) throws SQLException {
-        System.out.println("ExecQuery1");
-        System.out.println(query);
+        //System.out.println("ExecQuery1");
+        //System.out.println(query);
         try (PreparedStatement pstmt = conn.prepareStatement(query)) {
             int result = -1;
             int index = 1;
@@ -52,8 +55,8 @@ public class PostgreSQLConnection {
             }
             result = pstmt.executeUpdate();
             return result > 0 ? true : false;
-        } catch (SQLException s) {
-            System.out.println(s.getMessage());
+        } catch (SQLException e) {
+            CustomAlert.showError(e.getMessage());
             return false;
         }
     }
@@ -76,12 +79,14 @@ public class PostgreSQLConnection {
         try (Statement stmt = conn.createStatement()) {
             try (ResultSet rs = stmt.executeQuery(query)) {
                 while (rs.next()) {
-                    nextId = rs.getInt(1);
+                    if (rs.getObject(1) != null) {
+                        nextId = rs.getInt(1);
+                    } else {
+                        nextId = 1;
+                    }
                 }
             }
         }
         return nextId;
     }
-
-
 }

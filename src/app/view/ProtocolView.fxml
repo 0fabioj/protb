@@ -119,11 +119,11 @@
                </children>
                <columnConstraints>
                   <ColumnConstraints />
+                  <ColumnConstraints maxWidth="144.0" minWidth="140.0" prefWidth="144.0" />
                   <ColumnConstraints />
+                  <ColumnConstraints maxWidth="144.0" minWidth="144.0" prefWidth="144.0" />
                   <ColumnConstraints />
-                  <ColumnConstraints />
-                  <ColumnConstraints />
-                  <ColumnConstraints />
+                  <ColumnConstraints maxWidth="144.0" minWidth="144.0" prefWidth="144.0" />
                </columnConstraints>
                <rowConstraints>
                   <RowConstraints />

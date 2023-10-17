@@ -86,11 +86,11 @@ public class ProtocolView implements Initializable {
         int typeId = comboType.getSelectionModel().getSelectedItem().getId();
         String summary = textSummary.getText();
         int status = comboStatus.getSelectionModel().getSelectedIndex() + 1;
-        LocalDate recorded = dateRecorded.getValue();
-        LocalDate requested = dateRequested.getValue();
-        LocalDate receipted = dateReceived.getValue();
-        LocalDate forwarded = dateForwarded.getValue();
-        LocalDate checked = dateChecked.getValue();
+        LocalDate recorded = dateRecorded.getValue();//data protocolo
+        LocalDate requested = dateRequested.getValue();//data requerimento
+        LocalDate receipted = dateReceived.getValue();//data recebimento
+        LocalDate forwarded = dateForwarded.getValue();//data remetimento
+        LocalDate checked = dateChecked.getValue();//data deferimento
 
         if (personId <= 0) {
             CustomAlert.showInformation("Campo deve ser selecionado:\nRequerente");
@@ -98,8 +98,10 @@ public class ProtocolView implements Initializable {
             CustomAlert.showInformation("Campo deve ser selecionado:\nTipo");
         } else if (recorded == null) {
             CustomAlert.showInformation("Campo deve ser preenchido:\nData do Protocolo");
-        } else if (receipted== null) {
+        } else if (requested== null) {
             CustomAlert.showInformation("Campo deve ser preenchido:\nData do Requerimento");
+        } else if (receipted== null) {
+            CustomAlert.showInformation("Campo deve ser preenchido:\nData do Recebimento");
         } else {
             Protocol p = new Protocol();
             if (protocolId == null || protocolId.isEmpty()) {

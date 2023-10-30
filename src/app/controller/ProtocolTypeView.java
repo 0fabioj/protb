@@ -49,7 +49,7 @@ public class ProtocolTypeView implements Initializable {
                 pt.setId(Integer.parseInt(id));
             }
             pt.setDescription(desc);
-            if (ProtocolTypeController.save(pt)) {
+            if (ProtocolTypeController.save(pt) > 0) {
                 fillTableViewType();
             }
         }

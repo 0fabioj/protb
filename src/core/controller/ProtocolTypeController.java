@@ -2,7 +2,6 @@ package core.controller;
 
 import app.controller.CustomAlert;
 import core.model.ProtocolType;
-import database.IDatabase;
 import database.PostgreSQL;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -11,8 +10,8 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ProtocolTypeController implements IDatabase {
-    public static boolean save(ProtocolType pt) {
+public class ProtocolTypeController {
+    /*public static boolean save(ProtocolType pt) {
         Connection conn = PostgreSQL.connect();
         String query;
         List<Object> params = new ArrayList<>();
@@ -24,11 +23,32 @@ public class ProtocolTypeController implements IDatabase {
             } else {
                 query = "INSERT INTO protocol_type VALUES(" + PostgreSQL.NextFreeId(conn, "protocol_type") + ",?);";
             }
-            return PostgreSQL.ExecQuery1(conn, query, params);
+            //return PostgreSQL.ExecQuery1(conn, query, params);
+            return PostgreSQL.ExecQuery2(query, params);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } finally {
             PostgreSQL.closeDatabase(conn);
+        }
+    }*/
+    public static int save(ProtocolType pt) {
+        String query;
+        List<Object> params = new ArrayList<>();
+        params.add(pt.getDescription());
+        if (check(pt.getId()) > 0) {
+            query = "UPDATE protocol_type SET description=? WHERE id=?;";
+            params.add(pt.getId());
+        } else {
+            try {
+                query = "INSERT INTO protocol_type VALUES(" + PostgreSQL.NextFreeId("protocol_type") + ",?);";
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        try {
+            return PostgreSQL.ExecQuery2(query, params);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
     }
 

@@ -2,7 +2,6 @@ package core.controller;
 
 import app.controller.CustomAlert;
 import core.model.Person;
-import database.IDatabase;
 import database.PostgreSQL;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -14,7 +13,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PersonController implements IDatabase {
+public class PersonController {
     public static boolean save(Person p) {
         Connection conn = PostgreSQL.connect();
         String query;
@@ -25,7 +24,7 @@ public class PersonController implements IDatabase {
                 query = "UPDATE person SET name=? WHERE id=?;";
                 params.add(p.getId());
             } else {
-                query = "INSERT INTO person(id, name) VALUES(" + PostgreSQL.NextFreeId(conn, "person") + ",?);";
+                query = "INSERT INTO person(id, name) VALUES(" + PostgreSQL.NextFreeId("person") + ",?);";
             }
             return PostgreSQL.ExecQuery1(conn, query, params);
         } catch (SQLException e) {

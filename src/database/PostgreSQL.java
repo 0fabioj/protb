@@ -8,7 +8,7 @@ import java.util.List;
 
 public class PostgreSQL {
     public static Connection conn;
-    final private static String url = "jdbc:postgresql://192.168.1.157:5432/protb";
+    final private static String url = "jdbc:postgresql://192.168.1.156:5432/protb";
     final private static String user = "pgsql";
     final private static String password = "1234";
 
@@ -61,7 +61,7 @@ public class PostgreSQL {
         }
     }
 
-    public static int SelectCount(Connection conn, String query) throws  SQLException {
+    public static int SelectCount(Connection conn, String query) throws SQLException {
         int size = 0;
         try (Statement stmt = conn.createStatement()) {
             try (ResultSet rs = stmt.executeQuery(query)) {
@@ -73,20 +73,59 @@ public class PostgreSQL {
         return size;
     }
 
-    public static int NextFreeId(Connection conn, String table) throws SQLException {
-        var query = "SELECT MAX(id)+1 FROM " + table;
+    public static int NextFreeId(String table) throws SQLException {
+        var query = "SELECT MAX(id)+1 FROM " + table + ";";
         int nextId = 0;
-        try (Statement stmt = conn.createStatement()) {
-            try (ResultSet rs = stmt.executeQuery(query)) {
-                while (rs.next()) {
-                    if (rs.getObject(1) != null) {
-                        nextId = rs.getInt(1);
-                    } else {
-                        nextId = 1;
+        try (Connection conn = PostgreSQL.connect()) {
+            try (Statement stmt = conn.createStatement()) {
+                try (ResultSet rs = stmt.executeQuery(query)) {
+                    while (rs.next()) {
+                        if (rs.getObject(1) != null) {
+                            nextId = rs.getInt(1);
+                        } else {
+                            nextId = 1;
+                        }
                     }
                 }
             }
         }
         return nextId;
     }
+
+    public static int ExecQuery2(String query, List params) throws SQLException {
+        try (Connection conn = PostgreSQL.getConnection()) {
+            //try (Connection conn = PostgreSQL.connect()) {
+            try (PreparedStatement pstmt = conn.prepareStatement(query)) {
+                int index = 1;
+                if (null != params && !params.isEmpty()) {
+                    for (Object param : params) {
+                        pstmt.setObject(index++, param);
+                    }
+                }
+                return pstmt.executeUpdate();
+            } catch (SQLException e) {
+                CustomAlert.showError(e.getMessage());
+                return -1;
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            PostgreSQL.closeDatabase(conn);
+        }
+    }
+
+    /*public static boolean IsReady() {
+        boolean res = false;
+        try (Connection conn = PostgreSQL.getConnection()) {
+            if (conn != null) {
+                System.out.println("Connected to the database!");
+                res = true;
+            } else {
+                System.out.println("Failed to make connection!");
+            }
+        } catch (SQLException e) {
+            System.err.format("SQL State: %s\n%s", e.getSQLState(), e.getMessage());
+        }
+        return res;
+    }*/
 }

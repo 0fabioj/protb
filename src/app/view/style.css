@@ -1,142 +1,237 @@
+/**************************************************************************/
+/* Root */
+/**************************************************************************/
 .root {
-	-color-black: 		rgb(  0,  0,  0);
-	-color-white: 		rgb(255,255,255);
-	-color-red: 		rgb(104, 55, 43);
-	-color-cyan: 		rgb(112,164,178);
-	-color-purple: 		rgb(111, 61,134);
-	-color-green: 		rgb( 88,141, 67);
-	-color-blue: 		rgb( 53, 40,121);
-	-color-yellow: 		rgb(184,199,111);
-	-color-orange: 		rgb(111, 79, 37);
-	-color-brown: 		rgb( 67, 57,  0);
-	-color-light-red: 	rgb(154,103, 89);
-	-color-dark-grey: 	rgb( 68, 68, 68);
-	-color-grey: 		rgb(108,108,108);
-	-color-light-green:	rgb(154,210,132);
-	-color-light-blue: 	rgb(108, 94,181);
-	-color-light-grey:	rgb(149,149,149);
+	-color-black: 		    rgb(  0,  0,  0);
+	-color-white:           rgb(255,255,255);
+	-color-red: 		    rgb(104, 55, 43);
+	-color-cyan: 		    rgb(112,164,178);
+	-color-green: 		    rgb( 88,141, 67);
+	-color-blue:     		rgb( 53, 40,121);
+	-color-dark-grey:   	rgb( 68, 68, 68);
+	-color-grey: 		    rgb(108,108,108);
+	-color-light-green:	    rgb(154,210,132);
+	-color-light-blue:  	rgb(108, 94,181);
+	-color-light-grey:  	rgb(149,149,149);
 
-	-fx-font-family: 	"sans-serif";
+	-fx-font-family: 	    "arial";
 
-	-fx-background-color: 	-color-light-grey;
+	-fx-background-color: 	-color-white;
 }
-
-.label, .button {
-	-fx-font-weight: 	bold;
-	-fx-text-fill: 		-color-black;
+/**************************************************************************/
+/* Label */
+/**************************************************************************/
+.label {
+	-fx-font-weight: 	    normal;
+	-fx-text-fill: 		    -color-black;
 }
-
-.text-field, .combo-box {
-    	-fx-border-style: 	solid;
-	-fx-border-width:	1px 1px 1px 1px;
-	-fx-border-color:	-color-dark-grey -color-white -color-white -color-dark-grey;
+/**************************************************************************/
+/* TextField */
+/**************************************************************************/
+.text-field, .combo-box-base, .text-area .content {
+    -fx-border-style:    	solid;
+	-fx-border-width:	    1px;
+	-fx-border-color:	    -color-light-grey;
+	-fx-border-radius:	    8;
+	-fx-background-color:   transparent;
+	-fx-background-radius:  8;
 }
-
+/**************************************************************************/
+/* TextArea */
+/**************************************************************************/
+.text-area {
+    -fx-background-insets: 0;
+}
+/**************************************************************************/
+/* Button */
+/**************************************************************************/
 .button {
-	-fx-background-color:	-color-white;
-	-fx-background-radius:	5;
-
-	-fx-border-style:	solid;
-	-fx-border-width:	1px;
-	-fx-border-color:	-color-dark-grey;
-	-fx-border-radius:	2;
-}
-
-.combo-box .arrow {
+    -fx-font-weight: 	    normal;
+	-fx-text-fill: 		    -color-white;
 	-fx-background-color:	-color-black;
-}
+	-fx-background-radius:	8;
 
+	-fx-border-style:	    solid;
+	-fx-border-width:	    0px;
+	-fx-border-radius:	    8;
+
+	-fx-pref-height:        32;
+}
+.button:hover {
+	-fx-background-color:	-color-cyan;
+	-fx-border-color:	    -color-cyan;
+}
+/**************************************************************************/
+/* ComboBox */
+/**************************************************************************/
+.combo-box .arrow {
+	-fx-background-color:	-color-white;
+}
 .combo-box .arrow-button:hover {
-	-fx-background-color:	-color-yellow;
+	-fx-background-color:	-color-cyan;
+	-fx-border-color:	    -color-cyan;
 }
 .combo-box .arrow-button {
-	-fx-background-color:	-color-light-grey;
-	-fx-background-radius:	0;
-    	-fx-border-style: 	solid;
-	-fx-border-width:	0px 0px 0px 1px;
-	-fx-border-color:	-color-dark-grey -color-white -color-white -color-grey;
+	-fx-background-color:	-color-black;
+	-fx-background-radius:	0 7 7 0;
+    -fx-border-style: 	    solid;
+	-fx-border-width:	    1px 1px 1px 0px;
+	-fx-border-color:	    -color-black;
+	-fx-border-radius:      0 8 8 0;
+    -fx-text-fill: 		    -color-white;
 }
-
+.combo-box-popup .list-view {
+    -fx-background-color:   -color-black;
+    -fx-background-radius:	8 8 8 8;
+}
 .combo-box .list-cell {
-    	-fx-background-color:	-color-white;
+    -fx-text-fill:          -color-white;
+    -fx-background-color:	-color-black;
+    -fx-background-radius:	8 0 0 8;
 }
-
+.combo-box-popup .list-view .list-cell:filled:hover {
+    -fx-background-color:   -color-blue;
+    -fx-text-fill:          -color-white;
+    -fx-background-radius:	8 8 8 8;
+}
+.combo-box-popup .list-view .list-cell:selected {
+    -fx-background-radius:	8 8 8 8;
+}
+/**************************************************************************/
+/* DatePicker */
+/**************************************************************************/
 .date-picker {
-	-fx-pref-width:		108px;
+	-fx-pref-width:		    124px;
+}
+.date-picker .button {
+   -fx-background-color:	transparent;
+   -fx-height:              16;
 }
 .date-picker, .combo-box, .button {
-	-fx-background-insets:	0, 1;
+	-fx-background-insets:	0, -1;
+}
+.date-picker .text-field {
+	-fx-background-radius:	8 0 0 8;
+    -fx-border-style: 	    solid;
+	-fx-border-width:	    0px;
+	-fx-border-color:	    -color-dark-grey;
+	-fx-border-radius:	    8 0 0 8;
 }
 .date-picker .arrow-button {
-	-fx-background-color:	-color-light-grey;
-	-fx-background-radius:	0;
-    	-fx-border-style: 	solid;
-	-fx-border-width:	1px 1px 1px 1px;
-	-fx-border-color:	-color-dark-grey -color-white -color-white -color-grey;
+    -fx-border-style: 	    solid;
+    -fx-border-color:	    -color-white;
+	-fx-border-width:	    1px 1px 1px 0px;
+	-fx-border-radius:	    0 7 7 0;
+	-fx-background-color:	-color-white;
+	-fx-background-radius:	0 4 4 0;
 }
 .date-picker .arrow-button:hover {
-	-fx-background-color:	-color-yellow;
+	-fx-background-color:	-color-cyan;
 }
 .date-picker .arrow-button .arrow {
 	-fx-background-color:	-color-black;
 }
-
-.tool-bar {
-	-fx-background-color: 	-color-light-grey;
-	-fx-border-style: 	solid;
-    	-fx-border-width: 	0px 0px 1px 0px;
-    	-fx-border-color: 	-color-black;
-}
-
+/**************************************************************************/
+/* TableView */
+/**************************************************************************/
 .table-view .column-header,
 .table-view .column-header .filler,
 .table-view .column-header-background .filler {
-	-fx-font-weight: 	normal;
-	-fx-text-fill: 		-color-grey;
-	-fx-background-color: 	-color-light-grey;
-	-fx-border-style: 	solid;
-    	-fx-border-width: 	0px 0px 1px 0px;
-    	-fx-border-color: 	-color-grey;
+	-fx-font-weight: 	    normal;
+	-fx-text-fill: 		    -color-black;
+	-fx-background-color: 	-color-white;
+	-fx-border-style: 	    solid;
+    -fx-border-width:    	0px 0px 1px 0px;
+    -fx-border-color: 	    -color-light-grey;
 }
-
 .table-view .column-header .label {
-	-fx-text-fill:		-color-white;
-	-fx-font-weight:	normal;
+	-fx-text-fill:		    -color-black;
+	-fx-font-weight:	    bold;
 }
-
+.table-view .table-cell {
+    -fx-border-color:       transparent;
+    -fx-padding:            2 0 2 10px;
+}
+.table-row-cell {
+    -fx-background-color:   transparent;
+    -fx-padding:            0.0em;
+}
+.table-row-cell:hover {
+    -fx-background-color:       -color-light-grey;
+    -fx-text-background-color:  -color-blue;
+}
+.table-row-cell:selected {
+    -fx-background-color:       -color-cyan;
+    -fx-text-background-color:  -color-blue;
+}
+/**************************************************************************/
+/* ToolBar */
+/**************************************************************************/
+.tool-bar {
+	-fx-background-color: 	-color-white;
+	-fx-border-style: 	    solid;
+    -fx-border-width: 	    0px 0px 1px 0px;
+    -fx-border-color: 	    -color-light-grey;
+}
+/**************************************************************************/
+/* TitledPane */
+/**************************************************************************/
 TitledPane {
-	-fx-padding:		8 8 0 8;
-	-fx-text-fill:		-color-black;
+	-fx-padding:		    32 32 0 32;
+	-fx-text-fill: 		    -color-black;
+	-fx-effect:             dropshadow(three-pass-box, -color-grey, 24, 0.2, 0, 0);
 }
 TitledPane .title,
 TitledPane .content {
-	-fx-background-color:	-color-light-grey;
-	-fx-border-style:	solid;
-	-fx-border-width:	1px 1px 1px 1px;
-	-fx-border-color:	-color-white -color-dark-grey -color-dark-grey -color-white;
+	-fx-background-color:	-color-white;
+	-fx-border-style:   	solid;
 }
 TitledPane .title{
-	-fx-font-weight:	bold;
+	-fx-font-weight:	    bold;
+	-fx-border-width:   	2px 2px 0px 2px;
+    -fx-border-color:	    -color-black;
+	-fx-border-radius:	    8 8 0 0;
+	-fx-background-radius:  8 8 0 0;
 }
-
+TitledPane .content{
+	-fx-font-weight:	    normal;
+	-fx-border-width:   	0px 2px 2px 2px;
+    -fx-border-color:	    -color-black;
+	-fx-border-radius:	    0 0 8 8;
+    -fx-background-radius:  0 0 8 8;
+}
+/**************************************************************************/
+/* Titulo do APP */
+/**************************************************************************/
 #title {
-	-fx-font-size:		14pt;
+	-fx-font-size:		    14pt;
 }
-
+/**************************************************************************/
+/* HBox */
+/**************************************************************************/
 .HBox {
-	-fx-alignment:		center-left;
-	-fx-spacing:		4;
+	-fx-alignment:		    center-left;
+	-fx-spacing:		    4;
 }
-
+/**************************************************************************/
+/* GridPane */
+/**************************************************************************/
 GridPane {
-	-fx-padding:		5;
-	-fx-hgap:		5;
-	-fx-vgap:		5;
+	-fx-padding:		    5;
+	-fx-hgap:		        5;
+	-fx-vgap:		        5;
 }
-
+/**************************************************************************/
+/* Id Fixo */
+/**************************************************************************/
 .text-field-id {
-	-fx-background-color:	-color-light-green;
-    	-fx-border-style: 	solid;
-	-fx-border-width:	1px 1px 1px 1px;
-	-fx-border-color:	-color-dark-grey -color-white -color-white -color-dark-grey;
+    -fx-font-weight: 	    normal;
+	-fx-text-fill: 		    -color-green;
+	-fx-background-color:   -color-light-green;
+}
+/**************************************************************************/
+/* StatusBar */
+/**************************************************************************/
+.status-bar {
+    -fx-padding:		    16 8 8 8;
 }

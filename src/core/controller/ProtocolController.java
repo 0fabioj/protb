@@ -4,7 +4,6 @@ import app.controller.CustomAlert;
 import core.model.Person;
 import core.model.Protocol;
 import core.model.ProtocolType;
-import database.IDatabase;
 import database.PostgreSQL;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -16,7 +15,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ProtocolController implements IDatabase {
+public class ProtocolController {
     public static boolean save(Protocol p) {
         Connection conn = PostgreSQL.connect();
         String query;
@@ -39,7 +38,7 @@ public class ProtocolController implements IDatabase {
                         "WHERE id=?;";
                 params.add(p.getId());
             } else {
-                query = "INSERT INTO protocol VALUES(" + PostgreSQL.NextFreeId(conn, "protocol") +
+                query = "INSERT INTO protocol VALUES(" + PostgreSQL.NextFreeId("protocol") +
                         ",?,?,?,?,?,?,?,?,?,?,now(),null);";
             }
             return PostgreSQL.ExecQuery1(conn, query, params);

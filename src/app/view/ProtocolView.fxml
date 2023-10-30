@@ -62,7 +62,7 @@
             <GridPane>
                <children>
                   <Label text="Número" />
-                  <TextField id="text-field-id" fx:id="textfieldId" editable="false" maxWidth="-Infinity" prefWidth="64.0" GridPane.columnIndex="1" />
+                  <TextField fx:id="textfieldId" editable="false" maxWidth="-Infinity" prefWidth="64.0" styleClass="text-field-id" GridPane.columnIndex="1" />
                   <Label text="Data" GridPane.columnIndex="2" />
                   <DatePicker fx:id="dateRecorded" maxWidth="-Infinity" prefWidth="128.0" GridPane.columnIndex="3" />
                </children>

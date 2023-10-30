@@ -10,12 +10,40 @@
 <?import javafx.scene.control.ToolBar?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox prefHeight="384.0" prefWidth="512.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.controller.ProtocolTypeView">
-   <children>
-      <ToolBar prefHeight="40.0" prefWidth="200.0">
+<BorderPane prefHeight="384.0" prefWidth="512.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.controller.ProtocolTypeView">
+   <center>
+      <VBox prefHeight="200.0" prefWidth="100.0">
+            <TitledPane animated="false" collapsible="false" text="Dados">
+               <content>
+                  <HBox prefHeight="0.0" prefWidth="494.0" styleClass="HBox">
+                     <children>
+                        <Label prefHeight="16.0" prefWidth="144.0" text="Descrição" />
+                        <TextField fx:id="textfieldDesc" prefHeight="24.0" prefWidth="321.0" />
+                        <TextField fx:id="textfieldId" editable="false" prefHeight="24.0" prefWidth="76.0" visible="false" />
+                     </children>
+                  </HBox>
+               </content>
+            </TitledPane>
+            <TitledPane collapsible="false" prefHeight="258.0" prefWidth="512.0" text="Lista">
+               <content>
+                  <TableView fx:id="tableviewType" onMouseClicked="#actionEdit" prefHeight="246.0" prefWidth="494.0">
+                    <columns>
+                      <TableColumn fx:id="colDesc" prefWidth="314.0" text="Descrição" />
+                    </columns>
+                  </TableView>
+               </content>
+            </TitledPane>
+      </VBox>
+   </center>
+   <VBox.margin>
+      <Insets />
+   </VBox.margin>
+   <top>
+      <ToolBar prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER">
         <items>
             <Button fx:id="buttonSave" mnemonicParsing="false" onAction="#actionSave">
                <graphic>
@@ -55,28 +83,11 @@
            </Button>
         </items>
       </ToolBar>
-      <TitledPane animated="false" collapsible="false" text="Dados">
-         <content>
-            <HBox prefHeight="0.0" prefWidth="494.0" styleClass="HBox">
-               <children>
-                  <Label text="Descrição" />
-                  <TextField fx:id="textfieldDesc" prefHeight="24.0" prefWidth="321.0" />
-                  <TextField fx:id="textfieldId" editable="false" prefHeight="24.0" prefWidth="76.0" visible="false" />
-               </children>
-            </HBox>
-         </content>
-      </TitledPane>
-      <TitledPane collapsible="false" prefHeight="258.0" prefWidth="512.0" text="Lista">
-         <content>
-            <TableView fx:id="tableviewType" onMouseClicked="#actionEdit" prefHeight="246.0" prefWidth="494.0">
-              <columns>
-                <TableColumn fx:id="colDesc" prefWidth="314.0" text="Descrição" />
-              </columns>
-            </TableView>
-         </content>
-      </TitledPane>
-   </children>
-   <VBox.margin>
-      <Insets />
-   </VBox.margin>
-</VBox>
+   </top>
+   <bottom>
+      <HBox styleClass="status-bar" BorderPane.alignment="CENTER">
+         <children>
+            <Label text="Label" />
+         </children></HBox>
+   </bottom>
+</BorderPane>

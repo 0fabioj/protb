@@ -55,7 +55,7 @@ public class ProtocolView implements Initializable {
     public void actionNew() {
         Connection conn = PostgreSQL.connect();
         try {
-            textfieldId.setText(String.valueOf(PostgreSQL.NextFreeId(conn, "protocol")));
+            textfieldId.setText(String.valueOf(PostgreSQL.NextFreeId("protocol")));
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } finally {

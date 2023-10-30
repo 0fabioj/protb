@@ -4,6 +4,8 @@ import core.controller.ProtocolController;
 import core.controller.ProtocolTypeController;
 import core.model.Protocol;
 import core.model.ProtocolType;
+import database.PostgreSQL;
+import javafx.application.Platform;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
@@ -21,6 +23,8 @@ import javafx.util.StringConverter;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.ResourceBundle;
 
@@ -52,6 +56,7 @@ public class MainWindow implements Initializable {
     private DatePicker filterDate1;
     @FXML
     private DatePicker filterDate2;
+    @FXML Label labelStatus1;
 
     public void updateTableView() {
         try {
@@ -140,6 +145,7 @@ public class MainWindow implements Initializable {
         fillComboType();
         fillComboStatus();
         updateTableView();
+        labelStatus1.setText("Ready");
     }
 
     @FXML public void newProtocolWindow() throws IOException {
@@ -160,28 +166,29 @@ public class MainWindow implements Initializable {
 
     @FXML public void actionProtocolEdit(MouseEvent event) throws IOException {
         if (event.getClickCount() == 2) {
-            Protocol p = tableView1.getSelectionModel().getSelectedItem();
-            try {
-                if (stage == null || !stage.isShowing()) {
-                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/app/view/ProtocolView.fxml"));
-                    root = loader.load();
+            if(tableView1.getSelectionModel().getSelectedItem() != null) {
+                Protocol p = tableView1.getSelectionModel().getSelectedItem();
+                try {
+                    if (stage == null || !stage.isShowing()) {
+                        FXMLLoader loader = new FXMLLoader(getClass().getResource("/app/view/ProtocolView.fxml"));
+                        root = loader.load();
 
-                    ProtocolView pv = loader.getController();
-                    //pv.actionLoad(p);
-                    pv.setProtocol(p);
+                        ProtocolView pv = loader.getController();
+                        pv.setProtocol(p);
 
-                    //stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-                    stage = new Stage();
-                    stage.setTitle("[protB] Protocolo ["+p.getId()+"]");
-                    scene = new Scene(root);
-                    stage.setScene(scene);
-                    stage.show();
-                } else {
-                    stage.toFront();
+                        //stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+                        stage = new Stage();
+                        stage.setTitle("[protB] Protocolo ["+p.getId()+"]");
+                        scene = new Scene(root);
+                        stage.setScene(scene);
+                        stage.show();
+                    } else {
+                        stage.toFront();
+                    }
                 }
-            }
-            catch (IndexOutOfBoundsException e) {
-                System.err.println("IndexOutOfBoundsException: " + e.getMessage());
+                catch (IndexOutOfBoundsException e) {
+                    System.err.println("IndexOutOfBoundsException: " + e.getMessage());
+                }
             }
         }
     }

@@ -9,70 +9,80 @@
 <?import javafx.scene.control.ToolBar?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox prefHeight="400.0" prefWidth="600.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.controller.PersonView">
-   <children>
-      <ToolBar prefHeight="40.0" prefWidth="200.0">
-        <items>
-          <Button mnemonicParsing="false" onAction="#actionSave">
-               <graphic>
-                  <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../../img/save.png" />
-                     </image>
-                  </ImageView>
-               </graphic>
-            </Button>
-            <Button fx:id="buttonDel" mnemonicParsing="false" onAction="#actionDel">
-               <graphic>
-                  <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../../img/del.png" />
-                     </image>
-                  </ImageView>
-               </graphic>
-            </Button>
-            <Button mnemonicParsing="false" onAction="#actionClear">
-               <graphic>
-                  <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../../img/erase.png" />
-                     </image>
-                  </ImageView>
-               </graphic>
-            </Button>
-            <Button mnemonicParsing="false" onAction="#actionCancel">
-                <graphic>
-                    <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
+<BorderPane prefHeight="400.0" prefWidth="600.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.controller.PersonView">
+   <center>
+      <VBox prefHeight="200.0" prefWidth="100.0">
+            <TitledPane collapsible="false" prefHeight="43.0" prefWidth="600.0" text="Dados">
+               <content>
+                  <HBox prefHeight="100.0" prefWidth="200.0" styleClass="HBox">
+                           <Label prefWidth="164.0" text="Nome" />
+                           <TextField fx:id="textfieldName" prefHeight="24.0" prefWidth="433.0" />
+                           <TextField fx:id="textfieldId" editable="false" prefHeight="24.0" prefWidth="67.0" visible="false" />
+                  </HBox>
+               </content>
+            </TitledPane>
+            <TitledPane collapsible="false" prefHeight="274.0" prefWidth="600.0" text="Lista">
+               <content>
+                   <TableView fx:id="tableviewPerson" onMouseClicked="#actionEdit" prefHeight="319.0" prefWidth="600.0">
+                       <columns>
+                           <TableColumn fx:id="colName" prefWidth="500.0" text="Nome" />
+                       </columns>
+                   </TableView>
+               </content>
+            </TitledPane>
+      </VBox>
+   </center>
+   <bottom>
+         <HBox styleClass="status-bar" BorderPane.alignment="CENTER">
+            <children>
+               <Label text="Label" />
+            </children>
+         </HBox>
+   </bottom>
+   <top>
+         <ToolBar prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+           <items>
+             <Button mnemonicParsing="false" onAction="#actionSave">
+                  <graphic>
+                     <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
                         <image>
-                            <Image url="@../../img/back.png" />
+                           <Image url="@../../img/save.png" />
                         </image>
-                    </ImageView>
-                </graphic>
-            </Button>
-        </items>
-      </ToolBar>
-      <TitledPane collapsible="false" prefHeight="43.0" prefWidth="600.0" text="Dados">
-         <content>
-            <HBox prefHeight="100.0" prefWidth="200.0" styleClass="HBox">
-               <children>
-                     <Label text="Nome" />
-                     <TextField fx:id="textfieldName" prefHeight="24.0" prefWidth="433.0" />
-                     <TextField fx:id="textfieldId" editable="false" prefHeight="24.0" prefWidth="67.0" visible="false" />
-               </children>
-            </HBox>
-         </content>
-      </TitledPane>
-      <TitledPane collapsible="false" prefHeight="274.0" prefWidth="600.0" text="Lista">
-         <content>
-             <TableView fx:id="tableviewPerson" onMouseClicked="#actionEdit" prefHeight="319.0" prefWidth="600.0">
-                 <columns>
-                     <TableColumn fx:id="colName" prefWidth="581.0" text="Nome" />
-                 </columns>
-             </TableView>
-         </content>
-      </TitledPane>
-   </children>
-</VBox>
+                     </ImageView>
+                  </graphic>
+               </Button>
+               <Button fx:id="buttonDel" mnemonicParsing="false" onAction="#actionDel">
+                  <graphic>
+                     <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
+                        <image>
+                           <Image url="@../../img/del.png" />
+                        </image>
+                     </ImageView>
+                  </graphic>
+               </Button>
+               <Button mnemonicParsing="false" onAction="#actionClear">
+                  <graphic>
+                     <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
+                        <image>
+                           <Image url="@../../img/erase.png" />
+                        </image>
+                     </ImageView>
+                  </graphic>
+               </Button>
+               <Button mnemonicParsing="false" onAction="#actionCancel">
+                   <graphic>
+                       <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                               <Image url="@../../img/back.png" />
+                           </image>
+                       </ImageView>
+                   </graphic>
+               </Button>
+           </items>
+         </ToolBar>
+   </top>
+</BorderPane>

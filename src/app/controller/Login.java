@@ -1,5 +1,7 @@
 package app.controller;
 
+import database.PostgreSQL;
+import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
@@ -17,6 +19,8 @@ import javafx.stage.Screen;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.HashMap;
 
 public class Login {
@@ -30,44 +34,52 @@ public class Login {
     Label errorLabel;
 
     @FXML
-    protected void action_okButton(ActionEvent event) throws IOException {
-        String userId = userIdField.getText();
-        String userPassword = String.valueOf(userPasswordField.getText());
-        HashMap<String,String> logininfo = new HashMap<String,String>();
-        IPasswords iPasswords = new IPasswords();
-        logininfo = iPasswords.getLoginInfo();
+    protected void action_okButton(ActionEvent event) throws IOException, SQLException {
+        //if (PostgreSQL.IsReady()) {
+            String userId = userIdField.getText();
+            String userPassword = String.valueOf(userPasswordField.getText());
+            HashMap<String,String> logininfo;// = new HashMap<String,String>();
+            IPasswords iPasswords = new IPasswords();
+            logininfo = iPasswords.getLoginInfo();
 
-        if(logininfo.containsKey(userId)) {
-            if(logininfo.get(userId).equals(userPassword)) {
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/app/view/MainWindow.fxml"));
-                Parent root = loader.load();
-                //root = FXMLLoader.load(getClass().getResource("/app/view/MainWindow.fxml"));
-                Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-                Scene scene = new Scene(root);
-                stage.setScene(scene);
-                stage.show();
-                Rectangle2D primScreenBounds = Screen.getPrimary().getVisualBounds();
-                stage.setX((primScreenBounds.getWidth() - stage.getWidth()) / 2);
-                stage.setY((primScreenBounds.getHeight() - stage.getHeight()) / 2);
-
-                stage.focusedProperty().addListener(new ChangeListener<Boolean>()
-                {
-                    @Override
-                    public void changed(ObservableValue<? extends Boolean> ov, Boolean onHidden, Boolean onShown)
-                    {
-                        if(onShown) {
-                            MainWindow mainWindow = loader.getController();
-                            mainWindow.updateTableView();
-                        }
-                    }
-                });
+            if (logininfo.containsKey(userId)) {
+                if (logininfo.get(userId).equals(userPassword)) {
+                    openMainWindow(event);
+                }
+                else {
+                    errorLabel.setText("errou senha!");
+                }
             }
             else {
-                errorLabel.setText("errou senha!");
+                errorLabel.setText("errou usuario!");
             }
-        }
-        else {
-            errorLabel.setText("errou usuario!");
-        }
+        /*} else {
+            errorLabel.setText("Failed to make connection!");
+        }*/
+    }
+
+    public void openMainWindow(ActionEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/app/view/MainWindow.fxml"));
+        Parent root = loader.load();
+        //root = FXMLLoader.load(getClass().getResource("/app/view/MainWindow.fxml"));
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+        Rectangle2D primScreenBounds = Screen.getPrimary().getVisualBounds();
+        stage.setX((primScreenBounds.getWidth() - stage.getWidth()) / 2);
+        stage.setY((primScreenBounds.getHeight() - stage.getHeight()) / 2);
+
+        stage.focusedProperty().addListener(new ChangeListener<Boolean>()
+        {
+            @Override
+            public void changed(ObservableValue<? extends Boolean> ov, Boolean onHidden, Boolean onShown)
+            {
+                if(onShown) {
+                    MainWindow mainWindow = loader.getController();
+                    mainWindow.updateTableView();
+                }
+            }
+        });
     }
 }

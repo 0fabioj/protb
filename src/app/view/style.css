@@ -2,100 +2,87 @@
 /* Root */
 /**************************************************************************/
 .root {
-	-color-black: 		    rgb(  0,  0,  0);
-	-color-white:           rgb(255,255,255);
-	-color-red: 		    rgb(104, 55, 43);
-	-color-cyan: 		    rgb(112,164,178);
-	-color-green: 		    rgb( 88,141, 67);
-	-color-blue:     		rgb( 53, 40,121);
-	-color-dark-grey:   	rgb( 68, 68, 68);
-	-color-grey: 		    rgb(108,108,108);
-	-color-light-green:	    rgb(154,210,132);
-	-color-light-blue:  	rgb(108, 94,181);
-	-color-light-grey:  	rgb(149,149,149);
+	-background:		    rgb( 22, 27, 34);
+	-foreground:		    rgb(248,248,242);
+	-current-line: 		    rgb( 68, 71, 90);
+	-comment:               rgb( 98,114,164);
 
 	-fx-font-family: 	    "arial";
 
-	-fx-background-color: 	-color-white;
+	-fx-background-color: 	-background;
 }
 /**************************************************************************/
 /* Label */
 /**************************************************************************/
 .label {
 	-fx-font-weight: 	    normal;
-	-fx-text-fill: 		    -color-black;
+	-fx-text-fill: 		    -foreground;
 }
 /**************************************************************************/
 /* TextField */
 /**************************************************************************/
 .text-field, .combo-box-base, .text-area .content {
-    -fx-border-style:    	solid;
-	-fx-border-width:	    1px;
-	-fx-border-color:	    -color-light-grey;
-	-fx-border-radius:	    8;
+	-fx-font-weight: 	    normal;
+	-fx-text-fill: 		    -foreground;
+	-fx-border-width:	    1px 1px 1px 1px;
+	-fx-border-color:	    -current-line;
 	-fx-background-color:   transparent;
-	-fx-background-radius:  8;
+}
+.text-field:focused, .combo-box-base:focused, .text-area .content:focused {
+	-fx-border-color:       -comment;
 }
 /**************************************************************************/
 /* TextArea */
 /**************************************************************************/
 .text-area {
-    -fx-background-insets: 0;
+	-fx-background-insets:  0;
 }
 /**************************************************************************/
 /* Button */
 /**************************************************************************/
 .button {
-    -fx-font-weight: 	    normal;
-	-fx-text-fill: 		    -color-white;
-	-fx-background-color:	-color-black;
-	-fx-background-radius:	8;
-
-	-fx-border-style:	    solid;
-	-fx-border-width:	    0px;
-	-fx-border-radius:	    8;
-
-	-fx-pref-height:        32;
+	-fx-font-weight: 	    normal;
+	-fx-text-fill: 		    -foreground;
+	-fx-background-color:	transparent;
+	-fx-background-radius:	2;
+	-fx-pref-height:        22;
+	-fx-border-width:	    1px;
+	-fx-border-color:	    -current-line;
+	-fx-border-radius:	    2;
 }
 .button:hover {
-	-fx-background-color:	-color-cyan;
-	-fx-border-color:	    -color-cyan;
+	-fx-background-color:	-comment;
+	-fx-border-color:	    -foreground;
+	-fx-border-width:	    1px;
 }
 /**************************************************************************/
 /* ComboBox */
 /**************************************************************************/
 .combo-box .arrow {
-	-fx-background-color:	-color-white;
+	-fx-background-color:	-current-line;
 }
 .combo-box .arrow-button:hover {
-	-fx-background-color:	-color-cyan;
-	-fx-border-color:	    -color-cyan;
+	-fx-border-color:	    -comment;
 }
 .combo-box .arrow-button {
-	-fx-background-color:	-color-black;
-	-fx-background-radius:	0 7 7 0;
-    -fx-border-style: 	    solid;
-	-fx-border-width:	    1px 1px 1px 0px;
-	-fx-border-color:	    -color-black;
-	-fx-border-radius:      0 8 8 0;
-    -fx-text-fill: 		    -color-white;
+	-fx-background-color:	transparent;
+    -fx-text-fill:   		-foreground;
+	-fx-border-width:	    0px;
 }
 .combo-box-popup .list-view {
-    -fx-background-color:   -color-black;
-    -fx-background-radius:	8 8 8 8;
+	-fx-background-color:	-background;
 }
 .combo-box .list-cell {
-    -fx-text-fill:          -color-white;
-    -fx-background-color:	-color-black;
-    -fx-background-radius:	8 0 0 8;
+    -fx-text-fill:          -foreground;
+    -fx-background-color:	-background;
 }
 .combo-box-popup .list-view .list-cell:filled:hover {
-    -fx-background-color:   -color-blue;
-    -fx-text-fill:          -color-white;
-    -fx-background-radius:	8 8 8 8;
+	-fx-border-width:   	0px;
+    -fx-background-color:   -comment;
+    -fx-text-fill:          -foreground;
 }
 .combo-box-popup .list-view .list-cell:selected {
-    -fx-background-radius:	8 8 8 8;
+
 }
 /**************************************************************************/
 /* DatePicker */
@@ -107,29 +94,32 @@
    -fx-background-color:	transparent;
    -fx-height:              16;
 }
+.date-picker .label {
+	-fx-text-background-color:  -comment;
+}
 .date-picker, .combo-box, .button {
 	-fx-background-insets:	0, -1;
 }
 .date-picker .text-field {
-	-fx-background-radius:	8 0 0 8;
-    -fx-border-style: 	    solid;
-	-fx-border-width:	    0px;
-	-fx-border-color:	    -color-dark-grey;
-	-fx-border-radius:	    8 0 0 8;
+	-fx-border-width:       0px;
+	-fx-border-color:	    transparent;
 }
 .date-picker .arrow-button {
-    -fx-border-style: 	    solid;
-    -fx-border-color:	    -color-white;
-	-fx-border-width:	    1px 1px 1px 0px;
-	-fx-border-radius:	    0 7 7 0;
-	-fx-background-color:	-color-white;
-	-fx-background-radius:	0 4 4 0;
+	-fx-border-width:	    0px;
+	-fx-background-color:	transparent;
 }
 .date-picker .arrow-button:hover {
-	-fx-background-color:	-color-cyan;
+	-fx-background-color:	-comment;
 }
 .date-picker .arrow-button .arrow {
-	-fx-background-color:	-color-black;
+	-fx-background-color:	-current-line;
+}
+.date-picker-popup .month-year-pane {
+	-fx-base:		    -background;
+	-fx-mark-highlight-color: -foreground;
+}
+.calendar-grid {
+	-fx-background-color:   -foreground;
 }
 /**************************************************************************/
 /* TableView */
@@ -138,67 +128,87 @@
 .table-view .column-header .filler,
 .table-view .column-header-background .filler {
 	-fx-font-weight: 	    normal;
-	-fx-text-fill: 		    -color-black;
-	-fx-background-color: 	-color-white;
-	-fx-border-style: 	    solid;
-    -fx-border-width:    	0px 0px 1px 0px;
-    -fx-border-color: 	    -color-light-grey;
+	-fx-text-fill: 		    -foreground;
+	-fx-background-color: 	-background;
+    -fx-border-width:    	0.05em;
+    -fx-border-color: 	    -current-line;
 }
 .table-view .column-header .label {
-	-fx-text-fill:		    -color-black;
-	-fx-font-weight:	    bold;
+	-fx-text-fill:		    -foreground;
+	-fx-font-weight:	    normal;
 }
 .table-view .table-cell {
-    -fx-border-color:       transparent;
+    -fx-border-style:       solid inside;
+    -fx-border-color:       -current-line;
+    -fx-border-width:       0.03px;
     -fx-padding:            2 0 2 10px;
 }
 .table-row-cell {
-    -fx-background-color:   transparent;
+    -fx-background-color:   -foreground;
     -fx-padding:            0.0em;
 }
 .table-row-cell:hover {
-    -fx-background-color:       -color-light-grey;
-    -fx-text-background-color:  -color-blue;
+    -fx-background-color:   -foreground;
+    -fx-text-background-color:  -comment;
 }
 .table-row-cell:selected {
-    -fx-background-color:       -color-cyan;
-    -fx-text-background-color:  -color-blue;
+    -fx-background-color:   -comment;
+    -fx-text-background-color:  -foreground;
 }
 /**************************************************************************/
 /* ToolBar */
 /**************************************************************************/
 .tool-bar {
-	-fx-background-color: 	-color-white;
-	-fx-border-style: 	    solid;
-    -fx-border-width: 	    0px 0px 1px 0px;
-    -fx-border-color: 	    -color-light-grey;
+	-fx-background-color: 	transparent;
+	-fx-border-width: 	0px;
+}
+/**************************************************************************/
+/* TabPane */
+/**************************************************************************/
+TabPane {
+	-fx-padding:		    4 8 0 8;
+}
+.tab-pane .tab-header-area .tab-header-background {
+    -fx-opacity:            0;
+    -fx-background-insets:  0;
+}
+.tab-pane .tab {
+    -fx-background-color:   transparent;
+    -fx-border-width:   	0px;
+}
+.tab-pane .tab:selected {
+    -fx-background-color:   -current-line;
+    -fx-border-width:   	0px;
+    -fx-background-insets:  0, 1 1 0 1;
+    -fx-text-base-color:    -foreground;
+}
+.tab-pane .tab-header-area .headers-region .tab:selected .focus-indicator {
+    -fx-border-width:       0px;
+}
+.tab-content-area {
+	-fx-border-width:   	0px;
+	-fx-padding:		    4;
 }
 /**************************************************************************/
 /* TitledPane */
 /**************************************************************************/
 TitledPane {
-	-fx-padding:		    32 32 0 32;
-	-fx-text-fill: 		    -color-black;
-	-fx-effect:             dropshadow(three-pass-box, -color-grey, 24, 0.2, 0, 0);
+	-fx-padding:		    8 16 0 16;
+	-fx-text-fill: 		    -foreground;
 }
 TitledPane .title,
 TitledPane .content {
-	-fx-background-color:	-color-white;
-	-fx-border-style:   	solid;
+	-fx-background-color:	transparent;
 }
 TitledPane .title{
 	-fx-font-weight:	    bold;
-	-fx-border-width:   	2px 2px 0px 2px;
-    -fx-border-color:	    -color-black;
-	-fx-border-radius:	    8 8 0 0;
-	-fx-background-radius:  8 8 0 0;
+	-fx-border-width:   	0px;
+	-fx-background-radius:	0;
+	-fx-background-color:	linear-gradient(to right, -current-line, -background);
 }
 TitledPane .content{
 	-fx-font-weight:	    normal;
-	-fx-border-width:   	0px 2px 2px 2px;
-    -fx-border-color:	    -color-black;
-	-fx-border-radius:	    0 0 8 8;
-    -fx-background-radius:  0 0 8 8;
+	-fx-border-width:   	0px;
 }
 /**************************************************************************/
 /* Titulo do APP */
@@ -211,27 +221,57 @@ TitledPane .content{
 /**************************************************************************/
 .HBox {
 	-fx-alignment:		    center-left;
-	-fx-spacing:		    4;
+	-fx-spacing:		    8;
+	-fx-padding:		    4 8 0 8;
+}
+/**************************************************************************/
+/* VBox */
+/**************************************************************************/
+.VBox {
+	-fx-spacing:		    8;
 }
 /**************************************************************************/
 /* GridPane */
 /**************************************************************************/
 GridPane {
-	-fx-padding:		    5;
-	-fx-hgap:		        5;
-	-fx-vgap:		        5;
+	-fx-padding:		    4;
+	-fx-hgap:		        4;
+	-fx-vgap:		        4;
 }
 /**************************************************************************/
 /* Id Fixo */
 /**************************************************************************/
 .text-field-id {
-    -fx-font-weight: 	    normal;
-	-fx-text-fill: 		    -color-green;
-	-fx-background-color:   -color-light-green;
+    -fx-font-weight: 	    bold;
+    -fx-alignment:          center-right;
+    -fx-text-inner-color:   -comment;
 }
 /**************************************************************************/
 /* StatusBar */
 /**************************************************************************/
 .status-bar {
-    -fx-padding:		    16 8 8 8;
+    -fx-padding:		    8 8 8 8;
+}
+/**************************************************************************/
+/* Menu */
+/**************************************************************************/
+.menu-bar {
+    -fx-background-color:   linear-gradient(to right, -comment, -current-line);
+}
+.menu-bar .label {
+    -fx-font-family:        "arial";
+    -fx-text-fill:          -foreground;
+    -fx-font-weight:        normal;
+    -fx-padding:            3.0px 6.0px 3.0px 6.0px;
+}
+.menu-item {
+    -fx-padding:            0.0em 0.0em 0.0em 0.0em;
+    -fx-text-fill:          -foreground;
+}
+.menu-item .label {
+    -fx-text-fill:          -comment;
+}
+.menu-item .label:hover {
+    -fx-background:         -background;
+    -fx-text-fill:          -foreground;
 }

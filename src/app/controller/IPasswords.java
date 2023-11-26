@@ -3,9 +3,9 @@ package app.controller;
 import java.util.HashMap;
 
 public class IPasswords {
-    HashMap<String,String> logininfo = new HashMap<String,String>();
+    HashMap<String,String> logininfo = new HashMap<>();
     IPasswords() {
-        logininfo.put("fabio", "ava");
+        logininfo.put("fabio", "poiu");
     }
 
     protected HashMap<String,String> getLoginInfo() {

@@ -1,33 +1,45 @@
 package core.model;
 
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
+
 public class ProtocolType {
-    private int id;
-    private String description;
+    private final IntegerProperty id;
+    private final StringProperty name;
 
-    public ProtocolType() {
-    }
-
-    public ProtocolType(int id) {
-        this.id = id;
-    }
-    public ProtocolType(int id, String description) {
-        this.id = id;
-        this.description = description;
+    public ProtocolType(int id, String name) {
+        this.id = new SimpleIntegerProperty(id);
+        this.name = new SimpleStringProperty(name);
     }
 
     public int getId() {
+        return idProperty().get();
+    }
+
+    public IntegerProperty idProperty() {
         return id;
     }
 
     public void setId(int id) {
-        this.id = id;
+        idProperty().set(id);
     }
 
-    public String getDescription() {
-        return description;
+    public String getName() {
+        return nameProperty().get();
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public StringProperty nameProperty() {
+        return name;
+    }
+
+    public void setName(String name) {
+        nameProperty().set(name);
+    }
+
+    @Override
+    public String toString() {
+        return getName();
     }
 }

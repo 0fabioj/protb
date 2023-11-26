@@ -1,0 +1,349 @@
+/**************************************************************************/
+/* Root */
+/**************************************************************************/
+.root {
+	-background:		    rgba( 29, 29, 32);
+	-surface:   		    rgb( 48, 48, 49);
+	-surface-light: 	    rgba( 48, 48, 49, 0.4);
+	-surface-medium:	    rgba( 48, 48, 49, 0.6);
+	-surface-dark: 		    rgba( 48, 48, 49, 0.8);
+	-primary:   		    rgb(108,124,154);
+	-primary-light:		    rgb(118,134,184);
+	-primary-dark:		    rgb( 58, 64,184);
+	-secondary: 		    rgb(152, 52, 52);
+	-on-background: 	    rgb(255,255,252);
+	-on-surface:            rgb(225,225,222);
+	-on-surface-light: 	    rgba(225,225,222, 0.4);
+    -on-surface-medium:	    rgba(225,225,222, 0.6);
+    -on-surface-dark: 		rgba(225,225,222, 0.8);
+	-on-primary:            rgb( 98,114,254);
+	-on-secondary:          rgb(225,225,222);
+
+	-fx-font-family: 	    "arial";
+
+	-fx-background-color: 	-background;
+}
+/**************************************************************************/
+/* Label */
+/**************************************************************************/
+.label {
+	-fx-font-weight: 	    normal;
+	-fx-text-fill: 		    -on-surface-dark;
+}
+/**************************************************************************/
+/* TextField */
+/**************************************************************************/
+.text-field, .combo-box-base {
+	-fx-font-weight: 	    normal;
+	-fx-text-fill: 		    -on-surface-dark;
+	-fx-border-width:	    1px 1px 1px 1px;
+	-fx-border-color:	    -on-surface-light;
+	-fx-border-radius:      4;
+	-fx-background-color:   -surface-light;
+	-fx-background-radius:	4;
+}
+.text-field:focused, .combo-box-base:focused {
+	-fx-border-color:       -secondary;
+}
+/**************************************************************************/
+/* TextArea */
+/**************************************************************************/
+.text-area {
+    -fx-text-fill: 		    -on-surface-dark;
+    -fx-border-color:	    -on-surface-light;
+    -fx-border-width:       1px;
+    -fx-border-radius:      4;
+	-fx-background-insets:  0;
+	-fx-background-color:   transparent;
+	-fx-background-radius:  4;
+}
+.text-area .content {
+	-fx-background-insets:  -1;
+	-fx-background-color:   -surface;
+	-fx-background-radius:  4;
+}
+.text-area:focused {
+	-fx-border-color:       -secondary;
+}
+/**************************************************************************/
+/* Button */
+/**************************************************************************/
+.button {
+	-fx-font-weight: 	    normal;
+	-fx-text-fill: 		    -on-surface-medium;
+	-fx-background-color:	-surface-medium;
+	-fx-background-radius:	4;
+	-fx-pref-height:        32;
+	-fx-border-width:	    0px;
+}
+.button:hover {
+	-fx-background-color:	-secondary;
+	-fx-text-fill: 		    -on-secondary;
+}
+/**************************************************************************/
+/* TitledPane */
+/**************************************************************************/
+TitledPane {
+	-fx-padding:		    8 16 4 16;
+	-fx-text-fill: 		    -on-background;
+}
+TitledPane .title,
+TitledPane .content {
+	-fx-background-color:	-surface-dark;
+}
+TitledPane .title{
+	-fx-font-weight:	    normal;
+	-fx-border-width:   	0px;
+	-fx-background-radius:	0;
+	-fx-background-color:	-background;
+}
+TitledPane .content{
+	-fx-font-weight:	    normal;
+	-fx-border-width:   	0px;
+	-fx-background-radius:	4;
+}
+/**************************************************************************/
+/* ComboBox */
+/**************************************************************************/
+.combo-box .arrow {
+	-fx-background-color:	-on-surface;
+}
+.combo-box .arrow-button:hover {
+	-fx-border-color:	    -primary;
+}
+.combo-box .arrow-button {
+	-fx-background-color:	transparent;
+    -fx-text-fill:   		-on-surface;
+	-fx-border-width:	    0px;
+}
+.combo-box-popup .list-view {
+	-fx-background-color:	-surface;
+}
+.combo-box .list-cell {
+    -fx-text-fill:          -on-surface;
+    -fx-background-color:	transparent;
+}
+.combo-box-popup .list-view .list-cell:filled:hover {
+	-fx-border-width:   	0px;
+    -fx-background-color:   -primary;
+    -fx-text-fill:          -on-primary;
+}
+.combo-box-popup .list-view .list-cell:selected {
+
+}
+/**************************************************************************/
+/* Radio Button */
+/**************************************************************************/
+.radio-button {
+    -fx-text-fill: 		    -on-surface-dark;
+    -fx-padding:		    4 0 4 0;
+    -fx-focus-color:        -secondary;
+}
+/**************************************************************************/
+/* DatePicker */
+/**************************************************************************/
+.date-picker {
+	-fx-pref-width:		    124px;
+}
+.date-picker .button {
+   -fx-background-color:	transparent;
+   -fx-height:              16;
+}
+.date-picker .label {
+	-fx-text-background-color:  -primary;
+}
+.date-picker, .combo-box, .button {
+	-fx-background-insets:	0, -1;
+}
+.date-picker .text-field {
+	-fx-border-width:       0px;
+	-fx-border-color:	    transparent;
+}
+.date-picker .arrow-button {
+	-fx-border-width:	    0px;
+	-fx-background-color:	transparent;
+}
+.date-picker .arrow-button:hover {
+	-fx-background-color:	-primary;
+}
+.date-picker .arrow-button .arrow {
+	-fx-background-color:	-primary;
+}
+.date-picker-popup .month-year-pane {
+	-fx-base:		    -background;
+	-fx-mark-highlight-color: -primary;
+}
+.calendar-grid {
+	-fx-background-color:   -on-surface;
+}
+/**************************************************************************/
+/* TableView */
+/**************************************************************************/
+.table-view .column-header,
+.table-view .column-header .filler,
+.table-view .column-header-background .filler {
+	-fx-font-weight: 	    normal;
+	-fx-text-fill: 		    -on-surface-light;
+	-fx-background-color: 	-surface-dark;
+    -fx-border-width:    	0.05em;
+    -fx-border-color:       -surface-medium;
+}
+.table-view .column-header .label {
+	-fx-text-fill:		    -on-surface-medium;
+	-fx-font-weight:	    normal;
+}
+.table-row-cell:filled:hover {
+    -fx-text-background-color:  -on-primary;
+}
+.table-row-cell {
+    -fx-text-background-color:  -on-surface-light;
+    -fx-background-color:   -surface-light;
+    -fx-padding:            0.0em;
+    -fx-table-cell-border-color:    transparent;
+}
+.table-row-cell:empty {
+    -fx-background-color:   transparent;
+    -fx-table-cell-border-color:    transparent;
+}
+.table-row-cell:selected {
+    -fx-background-color:   -surface-dark;
+    -fx-text-background-color:  -on-primary;
+    -fx-background-radius:	4;
+}
+/**************************************************************************/
+/* TabPane */
+/**************************************************************************/
+TabPane {
+	-fx-padding:		    4 8 0 8;
+}
+.tab-pane .tab-header-area .tab-header-background {
+    -fx-opacity:            0;
+    -fx-background-insets:  0;
+}
+.tab-pane .tab {
+    -fx-background-color:   transparent;
+    -fx-border-width:   	0px;
+}
+.tab-pane .tab:selected {
+    -fx-background-color:   -primary;
+    -fx-border-width:   	0px;
+    -fx-background-insets:  0, 1 1 0 1;
+    -fx-text-base-color:    -om-primary;
+}
+.tab-pane .tab-header-area .headers-region .tab:selected .focus-indicator {
+    -fx-border-width:       0px;
+}
+.tab-content-area {
+	-fx-border-width:   	0px;
+	-fx-padding:		    4;
+}
+/**************************************************************************/
+/* ToolBar */
+/**************************************************************************/
+.tool-bar {
+	-fx-background-color: 	transparent;
+	-fx-border-width: 	0px;
+}
+/**************************************************************************/
+/* HBox */
+/**************************************************************************/
+.HBox {
+	-fx-alignment:		    center-left;
+	-fx-spacing:		    8;
+	-fx-padding:		    4 8 0 8;
+}
+#HBox-custom {
+	-fx-alignment:		    center-left;
+	-fx-spacing:		    8;
+}
+/**************************************************************************/
+/* VBox */
+/**************************************************************************/
+.VBox {
+	-fx-spacing:		    8;
+}
+/**************************************************************************/
+/* GridPane */
+/**************************************************************************/
+GridPane {
+	-fx-padding:		    8 8 8 8;
+	-fx-hgap:		        24;
+	-fx-vgap:		        4;
+}
+/**************************************************************************/
+/* StatusBar */
+/**************************************************************************/
+.status-bar {
+    -fx-padding:		    8 8 8 8;
+}
+/**************************************************************************/
+/* Menu */
+/**************************************************************************/
+.menu-bar {
+    -fx-background-color:   linear-gradient(to right, -surface-dark, -background);
+    -fx-selection-bar:      -surface;
+}
+.menu-bar .label {
+    -fx-font-family:        "arial";
+    -fx-text-fill:          -on-surface;
+    -fx-font-weight:        normal;
+    -fx-padding:            3.0px 6.0px 3.0px 6.0px;
+}
+.menu-item {
+    -fx-padding:            3.0px 6.0px 3.0px 6.0px;
+    -fx-text-fill:          -on-surface-medium;
+    -fx-background-color:   -surface-dark;
+}
+.menu-item .label {
+    -fx-text-fill:          -on-surface;
+}
+.menu-item:hover {
+    -fx-background-color:   -on-surface-light;
+    -fx-background-radius:  4;
+}
+.context-menu {
+    -fx-background-color:   -surface;
+}
+/**************************************************************************/
+/* SplitPane */
+/**************************************************************************/
+.split-pane-divider {
+    -fx-padding:            0 1 0 1 ;
+    -fx-background-color:   -surface;
+    -fx-background-insets:  0;
+}
+/**************************************************************************/
+/* MenuButton */
+/**************************************************************************/
+#menubutton {
+	-fx-font-weight: 	    normal;
+	-fx-text-fill: 		    -on-surface-medium;
+	-fx-background-color:	-surface-medium;
+	-fx-background-radius:	4;
+	-fx-pref-height:        32;
+	-fx-min-height:         32;
+	-fx-border-width:	    0px;
+	-fx-selection-bar:      -primary-dark;
+}
+#menubutton:hover {
+	-fx-text-fill: 		    -on-secondary;
+	-fx-background-color:	-secondary;
+}
+**************************************************************************/
+/* Label Clear Filter */
+/**************************************************************************/
+#labelclear {
+	-fx-font-weight: 	    bold;
+}
+#labelclear:hover {
+	-fx-text-fill: 		    -on-secondary;
+	-fx-background-color:	-secondary;
+	-fx-background-radius:	4;
+	-fx-background-insets:  0 -5 -3 -5;
+}
+/**************************************************************************/
+/* Titulo do APP */
+/**************************************************************************/
+#title {
+	-fx-font-size:		    14pt;
+}

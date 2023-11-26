@@ -1,0 +1,7 @@
+package app.controller;
+
+public enum ActionResult {
+    INSERT_SUCCESS, UPDATE_SUCCESS, DELETE_SUCCESS,
+    INSERT_ERROR, UPDATE_ERROR, DELETE_ERROR,
+    SUCCESS, CANCEL
+}

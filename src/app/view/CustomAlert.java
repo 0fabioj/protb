@@ -13,7 +13,7 @@ public class CustomAlert {
      */
     public static void showInformation(String content) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("[protB] Mensagem");
+        alert.setTitle("Mensagem");
         alert.setHeaderText(null);
         alert.setContentText(content);
         alert.showAndWait();
@@ -21,7 +21,7 @@ public class CustomAlert {
 
     public static void showError(String content) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle("[protB] Erro");
+        alert.setTitle("Erro");
         alert.setHeaderText(null);
         alert.setContentText(content);
         alert.showAndWait();
@@ -29,7 +29,7 @@ public class CustomAlert {
 
     public static boolean showConfirmation(String content) {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("[protB] Confirmação");
+        alert.setTitle("Confirmação");
         alert.setHeaderText(null);
         alert.setContentText(content);
         alert.showAndWait();

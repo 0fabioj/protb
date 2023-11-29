@@ -5,20 +5,20 @@ import javafx.scene.control.TextField;
 
 import java.io.File;
 import java.io.IOException;
+import java.sql.Timestamp;
+import java.time.LocalDate;
+import java.util.Objects;
 import java.util.Scanner;
 
 public class Utils {
     private static final String CSS_PATH = "/style.css";
-    //private static final String CONFIG_PATH = "src/app/resource/protb.ini";
     private static final String CONFIG_PATH = "protb.ini";
     public static int ValidateID(String idStr) {
         int id = 0;
         if (!idStr.isBlank()) {
             try {
                 id = Integer.parseInt(idStr);
-                System.out.println("ValidateID Success | Value: "+id);
             } catch (Exception e) {
-                System.out.print("ValidateID Error | ");
                 System.out.println(e.getMessage());
             }
         }
@@ -40,6 +40,13 @@ public class Utils {
                 ta.setText(s);
             }
         });
+    }
+
+    public static LocalDate sqlTimeStampToLocalDate(Object timeStamp) {
+        int year = ((Timestamp) timeStamp).toLocalDateTime().getYear();
+        int month = ((Timestamp) timeStamp).toLocalDateTime().getMonthValue();
+        int day = ((Timestamp) timeStamp).toLocalDateTime().getDayOfMonth();
+        return LocalDate.of(year, month, day);
     }
 
     public static String getCSS() {

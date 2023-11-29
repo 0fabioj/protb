@@ -4,7 +4,10 @@ import app.controller.Utils;
 import app.view.CustomAlert;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class PostgreSQL {
     public static Connection conn;
@@ -60,18 +63,29 @@ public class PostgreSQL {
         }
     }
 
-    public static ResultSet SelectQuery(String query) {
-        ResultSet rs;
-        try (Connection conn = PostgreSQL.getConnection()) {
-            try (Statement stmt = conn.createStatement()) {
-                rs = stmt.executeQuery(query);
-                return rs;
+    public static List<Map<Integer,Object>> SelectQuery(String query) {
+
+        List<Map<Integer,Object>> resultList = new ArrayList<>();
+        Map<Integer,Object> row = null;
+
+        try (
+                Connection conn = PostgreSQL.getConnection();
+                Statement stmt = conn.createStatement();
+                ResultSet rs = stmt.executeQuery(query);
+        ) {
+            ResultSetMetaData resultSetMetaData = rs.getMetaData();
+            int columnCount = resultSetMetaData.getColumnCount();
+            while (rs.next()) {
+                row = new HashMap<Integer,Object>();
+                for (int i = 1; i <= columnCount; i++) {
+                    row.put(i,rs.getObject(i));
+                }
+                resultList.add(row);
             }
-        } catch (SQLException e) {
-            CustomAlert.showError(e.getMessage());
-            throw new RuntimeException(e);
-        } finally {
-            PostgreSQL.closeDatabase(conn);
+            return resultList;
+        } catch (SQLException ex) {
+            CustomAlert.showError(ex.getMessage());
+            throw new RuntimeException(ex);
         }
     }
 

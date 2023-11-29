@@ -1,5 +1,6 @@
 package core.datamodel;
 
+import core.model.Person;
 import core.model.ProtocolType;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
@@ -9,6 +10,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class ProtocolTypeDataModel {
     private ObservableList<ProtocolType> protocolTypeFXBeans;
@@ -82,18 +84,12 @@ public class ProtocolTypeDataModel {
     }
 
     private List<ProtocolType> loadAll() {
-        System.out.println("Load All Types:");
         List<ProtocolType> list = new ArrayList<>();
         String query = "SELECT id, description "+
                 "FROM protocol_type ORDER BY description ASC";
-        ResultSet rs = PostgreSQL.SelectQuery(query);
-        while(true){
-            try {
-                if (!rs.next()) break;
-                list.add(new ProtocolType(rs.getInt(1),rs.getString(2)));
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
+        List<Map<Integer, Object>> rs = PostgreSQL.SelectQuery(query);
+        for (Map<Integer, Object> row : rs) {
+            list.add(new ProtocolType((Integer) row.get(1),(String) row.get(2)));
         }
         return list;
     }

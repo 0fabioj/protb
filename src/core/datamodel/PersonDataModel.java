@@ -9,6 +9,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class PersonDataModel {
     private ObservableList<Person> personFXBeans;
@@ -86,14 +87,9 @@ public class PersonDataModel {
         List<Person> list = new ArrayList<>();
         String query = "SELECT id, name "+
                 "FROM person ORDER BY name ASC";
-        ResultSet rs = PostgreSQL.SelectQuery(query);
-        while(true){
-            try {
-                if (!rs.next()) break;
-                list.add(new Person(rs.getInt(1),rs.getString(2)));
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
+        List<Map<Integer, Object>> rs = PostgreSQL.SelectQuery(query);
+        for (Map<Integer, Object> row : rs) {
+            list.add(new Person((Integer) row.get(1),(String) row.get(2)));
         }
         return list;
     }

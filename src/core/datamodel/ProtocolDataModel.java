@@ -1,5 +1,6 @@
 package core.datamodel;
 
+import app.controller.Utils;
 import core.model.Person;
 import core.model.Protocol;
 import core.model.ProtocolType;
@@ -7,11 +8,11 @@ import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.collections.FXCollections;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class ProtocolDataModel {
     private ObservableList<Protocol> protocolFXBeans;
@@ -115,28 +116,24 @@ public class ProtocolDataModel {
                 +"INNER JOIN person pe ON (pe.id=p.person_id) "
                 +"INNER JOIN protocol_type pt ON (pt.id=p.type_id) "
                 +"WHERE p.id="+id+";";
-        ResultSet rs = PostgreSQL.SelectQuery(query);
-        while(true){
-            try {
-                if (!rs.next()) break;
-                return new Protocol(
-                        rs.getInt(1),
-                        rs.getDate(2).toLocalDate(),
-                        new Person(rs.getInt(3),rs.getString(4)),
-                        new ProtocolType(rs.getInt(5),rs.getString(6)),
-                        rs.getString(7),
-                        rs.getString(8),
-                        rs.getDate(9).toLocalDate(),
-                        rs.getInt(10),
-                        rs.getObject(11) != null ? rs.getDate(11).toLocalDate() : LocalDate.now(),
-                        rs.getObject(12) != null ? rs.getDate(12).toLocalDate() : LocalDate.now(),
-                        rs.getObject(13) != null ? rs.getDate(13).toLocalDate() : LocalDate.now()
-                );
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
+        List<Map<Integer, Object>> rs = PostgreSQL.SelectQuery(query);
+        Protocol result = null;
+        for (Map<Integer, Object> row : rs) {
+            result = new Protocol(
+                    (Integer) row.get(1),
+                    Utils.sqlTimeStampToLocalDate(row.get(2)),
+                    new Person((Integer) row.get(3),(String) row.get(4)),
+                    new ProtocolType((Integer) row.get(5),(String) row.get(6)),
+                    (String) row.get(7),
+                    (String) row.get(8),
+                    Utils.sqlTimeStampToLocalDate(row.get(9)),
+                    (Integer) row.get(10),
+                    row.get(11) != null ? Utils.sqlTimeStampToLocalDate(row.get(11)) : LocalDate.now(),
+                    row.get(12) != null ? Utils.sqlTimeStampToLocalDate(row.get(12)) : LocalDate.now(),
+                    row.get(13) != null ? Utils.sqlTimeStampToLocalDate(row.get(13)) : LocalDate.now()
+            );
         }
-        return null;
+        return result;
     }
 
     private List<Protocol> loadAll() {
@@ -149,26 +146,21 @@ public class ProtocolDataModel {
                 +"INNER JOIN person pe ON (pe.id=p.person_id) "
                 +"INNER JOIN protocol_type pt ON (pt.id=p.type_id) "
                 +"ORDER BY p.id DESC;";
-        ResultSet rs = PostgreSQL.SelectQuery(query);
-        while(true){
-            try {
-                if (!rs.next()) break;
-                list.add(new Protocol(
-                        rs.getInt(1),
-                        rs.getDate(2).toLocalDate(),
-                        new Person(rs.getInt(3),rs.getString(4)),
-                        new ProtocolType(rs.getInt(5),rs.getString(6)),
-                        rs.getString(7),
-                        rs.getString(8),
-                        rs.getDate(9).toLocalDate(),
-                        rs.getInt(10),
-                        rs.getObject(11) != null ? rs.getDate(11).toLocalDate() : LocalDate.now(),
-                        rs.getObject(12) != null ? rs.getDate(12).toLocalDate() : LocalDate.now(),
-                        rs.getObject(13) != null ? rs.getDate(13).toLocalDate() : LocalDate.now()
-                ));
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
+        List<Map<Integer, Object>> rs = PostgreSQL.SelectQuery(query);
+        for (Map<Integer, Object> row : rs) {
+            list.add(new Protocol(
+                    (Integer) row.get(1),
+                    Utils.sqlTimeStampToLocalDate(row.get(2)),
+                    new Person((Integer) row.get(3),(String) row.get(4)),
+                    new ProtocolType((Integer) row.get(5),(String) row.get(6)),
+                    (String) row.get(7),
+                    (String) row.get(8),
+                    Utils.sqlTimeStampToLocalDate(row.get(9)),
+                    (Integer) row.get(10),
+                    row.get(11) != null ? Utils.sqlTimeStampToLocalDate(row.get(11)) : LocalDate.now(),
+                    row.get(12) != null ? Utils.sqlTimeStampToLocalDate(row.get(12)) : LocalDate.now(),
+                    row.get(13) != null ? Utils.sqlTimeStampToLocalDate(row.get(13)) : LocalDate.now()
+            ));
         }
         return list;
     }

@@ -53,6 +53,10 @@ public class MainWinHandle {
         }
 
         ui.tableViewProtocol.setItems(sortedData);
+        statusMsg.clear();
+        statusMsg.add(String.valueOf(sortedData.size()));
+        statusMsg.add(" registros");
+        ui.updateStatusBar(statusMsg);
     }
 
     private void setUiActions() {
@@ -68,10 +72,10 @@ public class MainWinHandle {
             protocolWinController.newProtocol();
             protocolWinController.showWindow();
             if (protocolWinController.getResultAction() == ActionResult.INSERT_SUCCESS) {
-                dataModel.getProtocolFXBeans().add(protocolWinController.getResultProtocol());
+                dataModel.getProtocolFXBeans().add(0, protocolWinController.getResultProtocol());
                 statusMsg.clear();
                 statusMsg.add("1");
-                statusMsg.add("Row inserted.");
+                statusMsg.add(" row inserted.");
                 ui.updateStatusBar(statusMsg);
             }
         });
@@ -88,30 +92,33 @@ public class MainWinHandle {
             aboutWindow.show();
         });
         ui.tableViewProtocol.setOnMouseClicked(event -> {
-            if (!ui.tableViewProtocol.getItems().isEmpty()) {
-                int id = ui.tableViewProtocol.getSelectionModel().getSelectedItem().getId();
-                int index = ui.tableViewProtocol.getSelectionModel().getSelectedIndex();
-                ProtocolWinHandle protocolWinController = new ProtocolWinHandle();
-                protocolWinController.loadProtocol(id);
-                protocolWinController.showWindow();
-                ActionResult result = protocolWinController.getResultAction();
-                if (result == ActionResult.UPDATE_SUCCESS) {
-                    dataModel.getProtocolFXBeans().set(index,protocolWinController.getResultProtocol());
+            System.out.println("Index:" + ui.tableViewProtocol.getSelectionModel().getSelectedIndex());
+            if (event.getClickCount() == 2) {
+                if (!ui.tableViewProtocol.getItems().isEmpty()) {
+                    int id = ui.tableViewProtocol.getSelectionModel().getSelectedItem().getId();
+                    int index = ui.tableViewProtocol.getSelectionModel().getSelectedIndex();
+                    ProtocolWinHandle protocolWinController = new ProtocolWinHandle();
+                    protocolWinController.loadProtocol(id);
+                    protocolWinController.showWindow();
+                    ActionResult result = protocolWinController.getResultAction();
+                    if (result == ActionResult.UPDATE_SUCCESS) {
+                        dataModel.getProtocolFXBeans().set(index,protocolWinController.getResultProtocol());
+                        statusMsg.clear();
+                        statusMsg.add("1");
+                        statusMsg.add(" row updated.");
+                        ui.updateStatusBar(statusMsg);
+                    } else if (result == ActionResult.DELETE_SUCCESS) {
+                        dataModel.getProtocolFXBeans().removeIf(protocol -> protocol.getId() == id);
+                        statusMsg.clear();
+                        statusMsg.add("1");
+                        statusMsg.add(" row removed.");
+                        ui.updateStatusBar(statusMsg);
+                    }
+                } else {
                     statusMsg.clear();
-                    statusMsg.add("1");
-                    statusMsg.add("Row updated.");
-                    ui.updateStatusBar(statusMsg);
-                } else if (result == ActionResult.DELETE_SUCCESS) {
-                    dataModel.getProtocolFXBeans().removeIf(protocol -> protocol.getId() == id);
-                    statusMsg.clear();
-                    statusMsg.add("1");
-                    statusMsg.add("Row removed.");
+                    statusMsg.add("Is empty.");
                     ui.updateStatusBar(statusMsg);
                 }
-            } else {
-                statusMsg.clear();
-                statusMsg.add("Is empty.");
-                ui.updateStatusBar(statusMsg);
             }
         });
 
@@ -127,17 +134,22 @@ public class MainWinHandle {
                     else
                         return false;
                 }));
-        ui.tfFilterPerson.textProperty().addListener((observable, oldValue, newValue) ->
-                filteredData.setPredicate(protocol -> {
-                    if (newValue == null || newValue.isEmpty()) {
-                        return true;
-                    }
-                    if (protocol.person().getName().toLowerCase().contains(newValue.toLowerCase())) {
-                        return true;
-                    }
-                    else
-                        return false;
-                }));
+        ui.tfFilterPerson.textProperty().addListener((observable, oldValue, newValue) -> {
+            filteredData.setPredicate(protocol -> {
+                if (newValue == null || newValue.isEmpty()) {
+                    return true;
+                }
+                if (protocol.person().getName().toLowerCase().contains(newValue.toLowerCase())) {
+                    return true;
+                }
+                else
+                    return false;
+            });
+            statusMsg.clear();
+            statusMsg.add(String.valueOf(sortedData.size()));
+            statusMsg.add(" registros");
+            ui.updateStatusBar(statusMsg);
+        });
         ui.cbFilterType.getSelectionModel().selectedItemProperty().addListener((options, oldValue, newValue) -> {
             filteredData.setPredicate(protocol -> {
                 if (ui.cbFilterType.getSelectionModel().getSelectedIndex() >= 0) {
@@ -150,6 +162,10 @@ public class MainWinHandle {
                 else
                     return true;
             });
+            statusMsg.clear();
+            statusMsg.add(String.valueOf(sortedData.size()));
+            statusMsg.add(" registros");
+            ui.updateStatusBar(statusMsg);
         });
         ui.cbFilterPeriod.getSelectionModel().selectedIndexProperty().addListener((options, oldValue, newValue) -> {
             if (newValue == null) {
@@ -181,6 +197,10 @@ public class MainWinHandle {
                     default -> false;
                 };
             });
+            statusMsg.clear();
+            statusMsg.add(String.valueOf(sortedData.size()));
+            statusMsg.add(" registros");
+            ui.updateStatusBar(statusMsg);
         });
     }
 
